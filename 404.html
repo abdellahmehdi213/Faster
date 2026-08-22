@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="html-root">
+<html lang="fr" dir="ltr" id="html-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>قائمة الطعام والطلب أونلاين | Menu & Commande en Ligne</title>
+  <title>Menu & Commande en Ligne | قائمة الطعام والطلب أونلاين</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
@@ -28,15 +28,15 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font-ar);
+      font-family: var(--font-lat);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       padding-bottom: 120px;
       -webkit-tap-highlight-color: transparent;
     }
-    body.lang-fr {
-      font-family: var(--font-lat);
+    body.lang-ar {
+      font-family: var(--font-ar);
     }
 
     /* ── Header ── */
@@ -59,11 +59,11 @@
       min-height: 54px;
     }
     .header h1 {
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-weight: 800;
       color: #fff;
       margin: 0;
-      padding: 0 50px;
+      padding: 0 52px;
       text-align: center;
       letter-spacing: -0.2px;
       line-height: 1.3;
@@ -88,26 +88,26 @@
     /* Compact Language Switcher */
     .lang-switcher-compact {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 2px;
+      right: 0;
       display: inline-flex;
-      background: rgba(0, 0, 0, 0.28);
+      background: rgba(0, 0, 0, 0.32);
       padding: 2px;
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.25);
       z-index: 10;
     }
-    [dir="ltr"] .lang-switcher-compact {
-      left: auto;
-      right: 0;
+    [dir="rtl"] .lang-switcher-compact {
+      right: auto;
+      left: 0;
     }
     .lang-btn-mini {
       background: transparent;
       border: none;
       color: rgba(255,255,255,0.75);
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 14px;
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       font-weight: 800;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -117,7 +117,7 @@
     .lang-btn-mini.active {
       background: #ffffff;
       color: #0369a1;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3);
     }
 
     /* ── Loading & States ── */
@@ -233,7 +233,6 @@
     .item-card:active { transform: scale(0.98); }
     .item-card.unavailable { opacity: 0.45; pointer-events: none; }
 
-    /* Item Image Container */
     .item-img-wrap {
       width: 100%;
       aspect-ratio: 16/11;
@@ -284,6 +283,7 @@
       opacity: 0.85;
       transition: opacity 0.2s;
     }
+    [dir="rtl"] .img-zoom-btn { right: auto; left: 6px; }
     .img-zoom-btn:hover { opacity: 1; }
 
     .item-body {
@@ -357,6 +357,7 @@
       border: 2px solid var(--surface);
       z-index: 2;
     }
+    [dir="rtl"] .qty-badge { left: auto; right: 8px; }
 
     /* ── Bottom Cart Bar ── */
     .cart-bar {
@@ -629,34 +630,34 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 30px 16px;
       text-align: center;
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 auto;
     }
     .success-screen.show { display: flex; }
-    .success-icon { font-size: 4rem; margin-bottom: 12px; }
-    .success-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .success-icon { font-size: 3.8rem; margin-bottom: 8px; }
+    .success-title { font-size: 1.45rem; font-weight: 800; margin-bottom: 4px; color: #fff; }
     .order-number-badge {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 900;
       color: var(--primary-light);
       background: rgba(2, 132, 199, 0.15);
       border: 2px solid var(--primary);
       border-radius: 16px;
-      padding: 8px 28px;
-      margin: 12px 0 20px;
+      padding: 6px 26px;
+      margin: 10px 0 16px;
       letter-spacing: 1px;
     }
     .receipt-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 16px;
       width: 100%;
-      max-width: 420px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       text-align: inherit;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     }
     .receipt-row {
       display: flex;
@@ -676,15 +677,15 @@
     }
     .status-tracker {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       justify-content: center;
-      margin: 16px 0 24px;
+      margin: 12px 0 20px;
       flex-wrap: wrap;
     }
     .status-step {
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -700,17 +701,50 @@
       color: var(--success);
       border-color: var(--success);
     }
+
+    /* Action Buttons in Success Screen */
+    .success-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 380px;
+      margin-top: 6px;
+    }
+    .pdf-btn {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+      transition: transform 0.1s, opacity 0.15s;
+    }
+    .pdf-btn:active { transform: scale(0.98); opacity: 0.9; }
+
     .new-order-btn {
       background: var(--surface2);
       border: 1.5px solid var(--border);
       color: var(--text);
-      padding: 12px 28px;
+      padding: 12px 20px;
       border-radius: 12px;
       font-family: inherit;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       cursor: pointer;
       font-weight: 700;
       transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .new-order-btn:hover { background: var(--border); }
 
@@ -767,6 +801,7 @@
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
+    [dir="rtl"] .img-modal-close { right: auto; left: -14px; }
 
     /* ── Error Screen & Direct Access Info ── */
     .error-screen {
@@ -793,6 +828,57 @@
       line-height: 1.5;
       color: var(--text-dim);
     }
+
+    /* ── Print Receipt Styles (@media print) ── */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        font-family: monospace, sans-serif !important;
+      }
+      .header, .tabs-wrap, .cart-bar, .modal-backdrop, #menu-view, .status-tracker, .success-actions, #error-screen, #loading, .success-icon, #new-order-btn, #btn-download-pdf, .order-status-label {
+        display: none !important;
+      }
+      .success-screen {
+        display: block !important;
+        padding: 10px !important;
+        max-width: 100% !important;
+      }
+      .success-title {
+        color: #000 !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 2px !important;
+      }
+      .order-number-badge {
+        color: #000 !important;
+        background: transparent !important;
+        border: 2px dashed #000 !important;
+        font-size: 1.6rem !important;
+        padding: 4px 10px !important;
+        margin: 6px auto 10px !important;
+        display: inline-block !important;
+      }
+      .receipt-card {
+        background: #fff !important;
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        padding: 10px !important;
+        color: #000 !important;
+        width: 100% !important;
+        max-width: 380px !important;
+        margin: 0 auto !important;
+      }
+      .receipt-row {
+        border-bottom: 1px dashed #777 !important;
+        color: #000 !important;
+      }
+      .receipt-total {
+        color: #000 !important;
+        font-size: 1.2rem !important;
+        border-top: 2px solid #000 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -802,31 +888,31 @@
   <div class="header-inner">
     <!-- Compact Language Switcher Pill -->
     <div class="lang-switcher-compact">
-      <button type="button" class="lang-btn-mini active" id="btn-lang-ar" onclick="setLanguage('ar')">AR 🇩🇿</button>
       <button type="button" class="lang-btn-mini" id="btn-lang-fr" onclick="setLanguage('fr')">FR 🇫🇷</button>
+      <button type="button" class="lang-btn-mini" id="btn-lang-ar" onclick="setLanguage('ar')">AR 🇩🇿</button>
     </div>
 
-    <h1 id="restaurant-title">اطلب وجبتك أونلاين</h1>
-    <span class="table-badge" id="table-badge">جارٍ التحميل...</span>
+    <h1 id="restaurant-title">Menu & Commande en Ligne</h1>
+    <span class="table-badge" id="table-badge">Chargement...</span>
   </div>
 </div>
 
 <!-- Loading -->
 <div id="loading" class="loader">
   <div class="spinner"></div>
-  <p id="loading-txt">جارٍ تحميل القائمة...</p>
+  <p id="loading-txt">Chargement du menu...</p>
 </div>
 
 <!-- Error / Setup Screen -->
 <div id="error-screen" class="error-screen">
   <div class="icon" id="error-icon">⚠️</div>
-  <h2 id="error-title">تعذّر تحميل القائمة</h2>
-  <p id="error-msg">تأكد من مسح رمز QR من الطاولة أو الملصق الحائطي للطلب.</p>
+  <h2 id="error-title">Impossible de charger le menu</h2>
+  <p id="error-msg">Veuillez scanner le QR code de table ou l'affiche murale pour accéder au menu.</p>
   <div id="direct-access-guide" class="direct-access-card" style="display:none;">
-    <div style="font-weight:bold;color:#fff;margin-bottom:6px;" id="guide-title">💡 كيفية الدخول للقائمة:</div>
-    <div id="guide-body">لزبائن المطعم: يرجى مسح رمز QR الموجود على طاولتك أو ملصق الحائط للدخول وطلب وجبتك فوراً.</div>
+    <div style="font-weight:bold;color:#fff;margin-bottom:6px;" id="guide-title">💡 Comment accéder au menu :</div>
+    <div id="guide-body">Scannez le QR code imprimé avec l'appareil photo de votre smartphone pour afficher le menu et identifier votre table.</div>
   </div>
-  <button id="retry-btn" onclick="location.reload()" style="margin-top:16px;padding:10px 24px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;">إعادة المحاولة 🔄</button>
+  <button id="retry-btn" onclick="location.reload()" style="margin-top:16px;padding:10px 24px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;">Réessayer 🔄</button>
 </div>
 
 <!-- Menu View -->
@@ -838,19 +924,30 @@
 <!-- Success View -->
 <div id="success-view" class="success-screen">
   <div class="success-icon">✅</div>
-  <div class="success-title" id="success-title">تم إرسال طلبك بنجاح!</div>
-  <p style="color:var(--text-dim)" id="order-num-label">رقم طلبك</p>
+  <div class="success-title" id="success-title">Commande transmise avec succès !</div>
+  <p style="color:var(--text-dim);font-size:0.9rem;" id="order-num-label">Votre numéro de commande</p>
   <div class="order-number-badge" id="order-number-display">#---</div>
   <div class="receipt-card" id="receipt-card"></div>
-  <div style="margin-top:10px">
-    <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:8px" id="order-status-label">حالة الطلب</p>
+  <div style="margin-top:6px;width:100%;">
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:8px" id="order-status-label" class="order-status-label">Statut de la commande</p>
     <div class="status-tracker" id="status-tracker">
-      <div class="status-step active" id="step-new">📋 جديد</div>
-      <div class="status-step" id="step-prep">🔥 قيد التحضير</div>
-      <div class="status-step" id="step-ready">✅ جاهز</div>
+      <div class="status-step active" id="step-new">📋 Reçue</div>
+      <div class="status-step" id="step-prep">🔥 En préparation</div>
+      <div class="status-step" id="step-ready">✅ Prête</div>
     </div>
   </div>
-  <button class="new-order-btn" id="new-order-btn" onclick="resetToMenu()">طلب جديد 🔄</button>
+
+  <!-- Success Action Buttons: Download PDF & New Order -->
+  <div class="success-actions">
+    <button class="pdf-btn" id="btn-download-pdf" onclick="downloadReceiptPDF()">
+      <span>📄</span>
+      <span id="txt-download-pdf">Télécharger le Reçu (PDF)</span>
+    </button>
+    <button class="new-order-btn" id="new-order-btn" onclick="resetToMenu()">
+      <span>🔄</span>
+      <span id="txt-new-order">Nouvelle commande</span>
+    </button>
+  </div>
 </div>
 
 <!-- Cart Bottom Bar -->
@@ -859,11 +956,11 @@
     <div class="cart-info">
       <div class="cart-count" id="cart-count">0</div>
       <div>
-        <div style="font-size:0.8rem;color:var(--text-dim)" id="cart-bar-label">السلة</div>
-        <div class="cart-total" id="cart-total-bar">0.00 د.ج</div>
+        <div style="font-size:0.8rem;color:var(--text-dim)" id="cart-bar-label">Panier</div>
+        <div class="cart-total" id="cart-total-bar">0.00 DZD</div>
       </div>
     </div>
-    <button class="checkout-btn" id="view-cart-btn" onclick="openCartModal()">عرض السلة ←</button>
+    <button class="checkout-btn" id="view-cart-btn" onclick="openCartModal()">Voir le panier →</button>
   </div>
 </div>
 
@@ -872,90 +969,90 @@
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
     <div class="modal-header">
-      <span class="modal-title" id="modal-cart-title">🛒 سلة الطلبات</span>
+      <span class="modal-title" id="modal-cart-title">🛒 Panier de commande</span>
       <button class="modal-close" onclick="closeCartModal()">✕</button>
     </div>
     <div class="cart-list" id="cart-list"></div>
 
     <!-- Order Type Selector -->
     <div class="form-group" style="padding-bottom: 2px;">
-      <label class="form-label" id="label-order-type">نوع الطلب</label>
+      <label class="form-label" id="label-order-type">Type de commande</label>
       <div class="order-type-selector">
         <button type="button" class="order-type-btn" id="btn-type-takeaway" onclick="setOrderType('takeaway')">
-          <span id="txt-takeaway">🥡 سفري</span>
+          <span id="txt-takeaway">🥡 À emporter</span>
         </button>
         <button type="button" class="order-type-btn active" id="btn-type-dinein" onclick="setOrderType('dine_in')">
-          <span id="txt-dinein">🍽️ محلي</span>
+          <span id="txt-dinein">🍽️ Sur place</span>
         </button>
         <button type="button" class="order-type-btn" id="btn-type-delivery" onclick="setOrderType('delivery')">
-          <span id="txt-delivery">🛵 توصيل</span>
+          <span id="txt-delivery">🛵 Livraison</span>
         </button>
       </div>
     </div>
     <div id="order-type-info" class="order-type-banner">
-      <span id="order-type-info-text">🍽️ <strong>داخل المطعم</strong>: سيتم تقديم الوجبات مباشرة إلى طاولتك.</span>
+      <span id="order-type-info-text">🍽️ <strong>Sur place</strong> : Vos plats seront servis directement à votre table.</span>
     </div>
 
     <!-- Table Input Group (Dine-in) -->
     <div class="form-group" id="table-input-group">
-      <label class="form-label" for="table-input-field" id="label-table-num">رقم الطاولة</label>
-      <input class="form-input" id="table-input-field" type="text" placeholder="رقم الطاولة (مثال: 1)" />
+      <label class="form-label" for="table-input-field" id="label-table-num">Numéro de table</label>
+      <input class="form-input" id="table-input-field" type="text" placeholder="N° de table (ex: 1)" />
     </div>
 
     <!-- Delivery Input Group (Delivery) -->
     <div id="delivery-input-group" style="display: none;">
       <div class="form-group">
         <label class="form-label" for="delivery-zone-select">
-          <span id="label-delivery-zone">📍 اختر منطقة التوصيل (Zone)</span>
+          <span id="label-delivery-zone">📍 Choisir la zone de livraison</span>
           <span style="color:#34d399;font-size:0.85rem;font-weight:bold" id="selected-zone-fee-tag"></span>
         </label>
         <select class="form-input" id="delivery-zone-select" onchange="onDeliveryZoneChanged()">
-          <option value="" id="opt-choose-zone">-- اضغط لاختيار منطقتك --</option>
+          <option value="" id="opt-choose-zone">-- Cliquez pour choisir votre zone --</option>
         </select>
         <div id="delivery-zone-hint" style="font-size:0.82rem;color:var(--text-dim);margin-top:6px;display:none;"></div>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="delivery-phone" id="label-phone">📱 رقم الهاتف للتواصل (مطلوب)</label>
+        <label class="form-label" for="delivery-phone" id="label-phone">📱 N° de téléphone (Requis)</label>
         <input class="form-input" id="delivery-phone" type="tel" dir="ltr" placeholder="05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx" />
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="delivery-address" id="label-address">🏠 عنوان التوصيل بالتفصيل (مطلوب)</label>
-        <textarea class="form-input" id="delivery-address" rows="2" placeholder="اسم الحي، الشارع، رقم العمارة أو الطابق، معلم مميز..."></textarea>
+        <label class="form-label" for="delivery-address" id="label-address">🏠 Adresse détaillée de livraison (Requise)</label>
+        <textarea class="form-input" id="delivery-address" rows="2" placeholder="Quartier, rue, n° de bâtiment/étage, repère..."></textarea>
       </div>
     </div>
 
     <!-- Customer Name -->
     <div class="form-group" id="common-customer-name-group">
-      <label class="form-label" for="customer-name" id="label-cust-name">الاسم (اختياري)</label>
-      <input class="form-input" id="customer-name" type="text" placeholder="محمد أحمد" />
+      <label class="form-label" for="customer-name" id="label-cust-name">Nom du client (Optionnel)</label>
+      <input class="form-input" id="customer-name" type="text" placeholder="Ex: Karim, Amine..." />
     </div>
 
     <!-- Order Notes -->
     <div class="form-group">
-      <label class="form-label" for="order-notes" id="label-notes">ملاحظات الطلب (اختياري)</label>
-      <input class="form-input" id="order-notes" type="text" placeholder="بدون بصل، صلصة إضافية، إلخ..." />
+      <label class="form-label" for="order-notes" id="label-notes">Instructions spéciales (Optionnel)</label>
+      <input class="form-input" id="order-notes" type="text" placeholder="Sans oignons, sauce à part, etc..." />
     </div>
 
     <!-- Price Summary Box -->
     <div class="cart-summary-box" id="cart-summary-box">
       <div class="summary-line" id="summary-subtotal-line" style="display:none;">
-        <span id="lbl-subtotal">مجموع الأصناف:</span>
-        <span id="summary-subtotal-val">0.00 د.ج</span>
+        <span id="lbl-subtotal">Sous-total :</span>
+        <span id="summary-subtotal-val">0.00 DZD</span>
       </div>
       <div class="summary-line" id="summary-delivery-line" style="display:none;color:#34d399;font-weight:bold;">
-        <span id="lbl-delivery-fee">🛵 رسوم التوصيل:</span>
-        <span id="summary-delivery-val">+0.00 د.ج</span>
+        <span id="lbl-delivery-fee">🛵 Frais de livraison :</span>
+        <span id="summary-delivery-val">+0.00 DZD</span>
       </div>
       <div class="cart-total-row" style="padding:4px 0 0;margin:0;border:none;">
-        <span id="lbl-grand-total">الإجمالي النهائي</span>
-        <span id="cart-total-modal" style="color:var(--primary-light)">0.00 د.ج</span>
+        <span id="lbl-grand-total">TOTAL TTC</span>
+        <span id="cart-total-modal" style="color:var(--primary-light)">0.00 DZD</span>
       </div>
     </div>
 
     <button class="place-order-btn" id="place-order-btn" onclick="placeOrder()">
-      🚀 أرسل طلبك الآن
+      🚀 Confirmer la commande
     </button>
   </div>
 </div>
@@ -970,67 +1067,8 @@
 </div>
 
 <script>
-// ── Multilingual Dictionary (Arabic & French) ──
+// ── Multilingual Dictionary (French & Arabic) ──
 const DICT = {
-  ar: {
-    title: 'اطلب وجبتك أونلاين',
-    loading: 'جارٍ تحميل القائمة...',
-    errorTitle: 'تعذّر تحميل القائمة',
-    errorMsg: 'يرجى مسح رمز QR من ملصق الطاولة أو الحائط للدخول للقائمة.',
-    guideTitle: '💡 كيفية فتح القائمة:',
-    guideBody: 'امسح رمز QR المطبوع من برنامج المطعم عبر كاميرا هاتفك لتفتح القائمة مباشرة وتتعرف على طاولتك تلقائياً.',
-    retry: 'إعادة المحاولة',
-    allTab: '🍽️ الكل',
-    otherCat: 'أخرى',
-    noItemsCat: 'لا توجد عناصر في هذه الفئة.',
-    tableBadgeWall: '🛍️ طلب أونلاين (سفري / توصيل / محلي)',
-    tableBadgeTable: 'طاولة {t}',
-    cart: 'السلة',
-    viewCart: 'عرض السلة ←',
-    cartTitle: '🛒 سلة الطلبات',
-    emptyCart: 'السلة فارغة',
-    orderType: 'نوع الطلب',
-    takeaway: '🥡 سفري',
-    dinein: '🍽️ محلي',
-    delivery: '🛵 توصيل',
-    takeawayInfo: '<span>🥡 <strong>طلب سفري / استلام</strong>: سيتم تجهيز طلبك في أكياس سفري ومناداتك برقم الطلب عند الكاونتر.</span>',
-    dineinInfo: '<span>🍽️ <strong>داخل المطعم</strong>: سيتم تقديم الوجبات مباشرة إلى طاولتك.</span>',
-    deliveryInfo: '<span>🛵 <strong>طلب توصيل منازل</strong>: اختر منطقتك وسيقوم مندوب التوصيل بإيصال طلبك إلى عنوانك.</span>',
-    tableNumLabel: 'رقم الطاولة',
-    tableNumPlaceholder: 'رقم الطاولة (مثال: 1)',
-    deliveryZoneLabel: '📍 اختر منطقة التوصيل (Zone)',
-    deliveryZoneSelect: '-- اضغط لاختيار منطقتك --',
-    deliveryGeneral: 'منطقة عامة (توصيل عادي)',
-    estimatedTime: '⏱️ وقت التوصيل المتوقع: {t}',
-    phoneLabel: '📱 رقم الهاتف للتواصل (مطلوب)',
-    phonePlaceholder: '05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx',
-    addressLabel: '🏠 عنوان التوصيل بالتفصيل (مطلوب)',
-    addressPlaceholder: 'اسم الحي، الشارع، رقم العمارة أو الطابق، معلم مميز...',
-    nameLabel: 'الاسم (اختياري)',
-    namePlaceholder: 'محمد أحمد',
-    notesLabel: 'ملاحظات الطلب (اختياري)',
-    notesPlaceholder: 'بدون بصل، صلصة إضافية، إلخ...',
-    subtotal: 'مجموع الأصناف:',
-    deliveryFee: '🛵 رسوم التوصيل:',
-    grandTotal: 'الإجمالي النهائي',
-    placeOrder: '🚀 أرسل طلبك الآن',
-    placingOrder: '⏳ جارٍ إرسال الطلب...',
-    successTitle: 'تم إرسال طلبك بنجاح!',
-    orderNumLabel: 'رقم طلبك',
-    orderStatusLabel: 'حالة الطلب',
-    stepNew: '📋 جديد',
-    stepPrep: '🔥 قيد التحضير',
-    stepReady: '✅ جاهز',
-    newOrder: 'طلب جديد 🔄',
-    orderDetails: '🧾 تفاصيل الطلب',
-    zoneWarn: '⚠️ يرجى اختيار منطقة التوصيل من القائمة للمتابعة.',
-    phoneWarn: '⚠️ يرجى إدخال رقم هاتفك ليتواصل معك مندوب التوصيل.',
-    addressWarn: '⚠️ يرجى إدخال عنوان التوصيل بالتفصيل (الحي، الشارع، رقم العمارة...).',
-    currency: 'د.ج',
-    custDelivery: 'زبون توصيل',
-    custTakeaway: 'زبون سفري',
-    custDinein: 'عميل طاولة'
-  },
   fr: {
     title: 'Commandez en Ligne',
     loading: 'Chargement du menu...',
@@ -1080,6 +1118,7 @@ const DICT = {
     stepNew: '📋 Reçue',
     stepPrep: '🔥 En préparation',
     stepReady: '✅ Prête pour retrait',
+    downloadPdf: 'Télécharger le Reçu (PDF)',
     newOrder: 'Nouvelle commande 🔄',
     orderDetails: '🧾 Détails de la commande',
     zoneWarn: '⚠️ Veuillez sélectionner une zone de livraison dans la liste.',
@@ -1089,6 +1128,66 @@ const DICT = {
     custDelivery: 'Client Livraison',
     custTakeaway: 'Client À emporter',
     custDinein: 'Client Table'
+  },
+  ar: {
+    title: 'اطلب وجبتك أونلاين',
+    loading: 'جارٍ تحميل القائمة...',
+    errorTitle: 'تعذّر تحميل القائمة',
+    errorMsg: 'يرجى مسح رمز QR من ملصق الطاولة أو الحائط للدخول للقائمة.',
+    guideTitle: '💡 كيفية فتح القائمة:',
+    guideBody: 'امسح رمز QR المطبوع من برنامج المطعم عبر كاميرا هاتفك لتفتح القائمة مباشرة وتتعرف على طاولتك تلقائياً.',
+    retry: 'إعادة المحاولة',
+    allTab: '🍽️ الكل',
+    otherCat: 'أخرى',
+    noItemsCat: 'لا توجد عناصر في هذه الفئة.',
+    tableBadgeWall: '🛍️ طلب أونلاين (سفري / توصيل / محلي)',
+    tableBadgeTable: 'طاولة {t}',
+    cart: 'السلة',
+    viewCart: 'عرض السلة ←',
+    cartTitle: '🛒 سلة الطلبات',
+    emptyCart: 'السلة فارغة',
+    orderType: 'نوع الطلب',
+    takeaway: '🥡 سفري',
+    dinein: '🍽️ محلي',
+    delivery: '🛵 توصيل',
+    takeawayInfo: '<span>🥡 <strong>طلب سفري / استلام</strong>: سيتم تجهيز طلبك في أكياس سفري ومناداتك برقم الطلب عند الكاونتر.</span>',
+    dineinInfo: '<span>🍽️ <strong>داخل المطعم</strong>: سيتم تقديم الوجبات مباشرة إلى طاولتك.</span>',
+    deliveryInfo: '<span>🛵 <strong>طلب توصيل منازل</strong>: اختر منطقتك وسيقوم مندوب التوصيل بإيصال طلبك إلى عنوانك.</span>',
+    tableNumLabel: 'رقم الطاولة',
+    tableNumPlaceholder: 'رقم الطاولة (مثال: 1)',
+    deliveryZoneLabel: '📍 اختر منطقة التوصيل (Zone)',
+    deliveryZoneSelect: '-- اضغط لاختيار منطقتك --',
+    deliveryGeneral: 'منطقة عامة (توصيل عادي)',
+    estimatedTime: '⏱️ وقت التوصيل المتوقع: {t}',
+    phoneLabel: '📱 رقم الهاتف للتواصل (مطلوب)',
+    phonePlaceholder: '05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx',
+    addressLabel: '🏠 عنوان التوصيل بالتفصيل (مطلوب)',
+    addressPlaceholder: 'اسم الحي، الشارع، رقم العمارة أو الطابق، معلم مميز...',
+    nameLabel: 'الاسم (اختياري)',
+    namePlaceholder: 'محمد أحمد',
+    notesLabel: 'ملاحظات الطلب (اختياري)',
+    notesPlaceholder: 'بدون بصل، صلصة إضافية، إلخ...',
+    subtotal: 'مجموع الأصناف:',
+    deliveryFee: '🛵 رسوم التوصيل:',
+    grandTotal: 'الإجمالي النهائي',
+    placeOrder: '🚀 أرسل طلبك الآن',
+    placingOrder: '⏳ جارٍ إرسال الطلب...',
+    successTitle: 'تم إرسال طلبك بنجاح!',
+    orderNumLabel: 'رقم طلبك',
+    orderStatusLabel: 'حالة الطلب',
+    stepNew: '📋 جديد',
+    stepPrep: '🔥 قيد التحضير',
+    stepReady: '✅ جاهز',
+    downloadPdf: 'تحميل الوصل (PDF)',
+    newOrder: 'طلب جديد 🔄',
+    orderDetails: '🧾 تفاصيل الطلب',
+    zoneWarn: '⚠️ يرجى اختيار منطقة التوصيل من القائمة للمتابعة.',
+    phoneWarn: '⚠️ يرجى إدخال رقم هاتفك ليتواصل معك مندوب التوصيل.',
+    addressWarn: '⚠️ يرجى إدخال عنوان التوصيل بالتفصيل (الحي، الشارع، رقم العمارة...).',
+    currency: 'د.ج',
+    custDelivery: 'زبون توصيل',
+    custTakeaway: 'زبون سفري',
+    custDinein: 'عميل طاولة'
   }
 };
 
@@ -1099,6 +1198,8 @@ const FOOD_TRANSLATIONS = {
   'بيتزا': 'Pizzas',
   'تاكوس': 'Tacos',
   'سندويتشات': 'Sandwichs',
+  'سندويتش': 'Sandwich',
+  'شاورما': 'Chawarma',
   'وجبات سريعة': 'Fast Food',
   'أطباق رئيسية': 'Plats Principaux',
   'مقبلات': 'Entrées',
@@ -1106,13 +1207,23 @@ const FOOD_TRANSLATIONS = {
   'حلويات': 'Desserts',
   'عصائر': 'Jus & Smoothies',
   'سلطات': 'Salades',
-  'شاورما': 'Chawarma',
   'باستا': 'Pâtes',
-  'مشويات': 'Grillades'
+  'مشويات': 'Grillades',
+  'آيس كريم': 'Glaces / Ice Cream',
+  'طاولة': 'Table'
 };
 
-// ── Language State ──
-let currentLang = localStorage.getItem('web_lang') || 'ar';
+// ── Smart Auto-Language Detection ──
+function detectInitialLanguage() {
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  if (urlLang === 'fr' || urlLang === 'ar') return urlLang;
+  const savedLang = localStorage.getItem('web_lang');
+  if (savedLang) return savedLang;
+  const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  return navLang.startsWith('ar') ? 'ar' : 'fr';
+}
+
+let currentLang = detectInitialLanguage();
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -1123,7 +1234,7 @@ function setLanguage(lang) {
   html.setAttribute('lang', lang);
   html.setAttribute('dir', isFr ? 'ltr' : 'rtl');
 
-  document.body.className = isFr ? 'lang-fr' : '';
+  document.body.className = isFr ? '' : 'lang-ar';
 
   const btnAr = document.getElementById('btn-lang-ar');
   const btnFr = document.getElementById('btn-lang-fr');
@@ -1135,10 +1246,13 @@ function setLanguage(lang) {
   populateDeliveryZonesDropdown();
   updateCartUI();
   renderMenu();
+  if (lastSavedOrderPayload) {
+    updateReceiptCardUI(lastSavedOrderPayload);
+  }
 }
 
 function t(key) {
-  return (DICT[currentLang] && DICT[currentLang][key]) || DICT['ar'][key] || key;
+  return (DICT[currentLang] && DICT[currentLang][key]) || DICT['fr'][key] || key;
 }
 
 function translateName(name) {
@@ -1196,7 +1310,8 @@ function applyStaticTranslations() {
   document.getElementById('step-new').textContent = t('stepNew');
   document.getElementById('step-prep').textContent = t('stepPrep');
   document.getElementById('step-ready').textContent = t('stepReady');
-  document.getElementById('new-order-btn').textContent = t('newOrder');
+  document.getElementById('txt-download-pdf').textContent = t('downloadPdf');
+  document.getElementById('txt-new-order').textContent = t('newOrder');
 
   if (isWallMode) {
     document.getElementById('table-badge').textContent = t('tableBadgeWall');
@@ -1217,10 +1332,6 @@ const TABLE_ID    = decodeURIComponent(params.get('tid') || localStorage.getItem
 
 let rawProjectId  = params.get('r') || localStorage.getItem('sb_project_id') || '';
 let rawKey        = params.get('k') || localStorage.getItem('sb_anon_key') || '';
-
-if (params.get('lang')) {
-  currentLang = params.get('lang') === 'fr' ? 'fr' : 'ar';
-}
 
 // Clean ASCII for HTTP headers
 let PROJECT_ID    = rawProjectId.replace(/[^\x00-\x7F]/g, '').trim();
@@ -1244,6 +1355,8 @@ let activeCatId = null;
 let currentOrderId = null;
 let currentOrderType = 'dine_in';
 let restaurantNameLoaded = false;
+let currentRestaurantName = 'Restaurant';
+let lastSavedOrderPayload = null;
 
 // ── Order Type State Handler ──
 function setOrderType(type) {
@@ -1429,6 +1542,7 @@ async function loadMenu() {
         const info = infoRes[0];
         if (info.name) {
           restaurantNameLoaded = true;
+          currentRestaurantName = info.name;
           document.getElementById('restaurant-title').textContent = info.name;
         }
       }
@@ -1445,7 +1559,7 @@ async function loadMenu() {
 function showDirectAccessGuide() {
   document.getElementById('error-screen').classList.add('show');
   document.getElementById('direct-access-guide').style.display = 'block';
-  document.getElementById('table-badge').textContent = '⚠️ رمز QR مطلوب';
+  document.getElementById('table-badge').textContent = '⚠️ QR Code Requis / رمز QR مطلوب';
 }
 
 // ── Render Menu ──
@@ -1518,7 +1632,7 @@ function renderItems() {
   }
 }
 
-// ── Item Card Builder with High-Quality Photos ──
+// ── Item Card Builder ──
 function buildItemCard(item) {
   const cartItem = cart.find(c => c.item.id === item.id);
   const qty = cartItem ? cartItem.qty : 0;
@@ -1783,12 +1897,39 @@ async function placeOrder() {
       cashier_name: isDelivery ? 'Online Delivery (Web)' : (isTakeaway ? 'Wall QR (Takeaway)' : 'Table QR'),
       created_at: now,
       updated_at: now,
+      items_snapshot: cart.map(c => ({
+        name: c.item.name,
+        price: c.item.base_price,
+        qty: c.qty,
+        total: c.item.base_price * c.qty
+      }))
     };
 
     try {
       await sbFetch('orders', {
         method: 'POST',
-        body: JSON.stringify(orderPayload),
+        body: JSON.stringify({
+          id: orderPayload.id,
+          order_number: orderPayload.order_number,
+          order_type: orderPayload.order_type,
+          table_id: orderPayload.table_id,
+          table_number: orderPayload.table_number,
+          customer_name: orderPayload.customer_name,
+          customer_phone: orderPayload.customer_phone,
+          status: orderPayload.status,
+          subtotal: orderPayload.subtotal,
+          tax_rate: orderPayload.tax_rate,
+          tax_amount: orderPayload.tax_amount,
+          delivery_fee: orderPayload.delivery_fee,
+          discount_amount: orderPayload.discount_amount,
+          total_amount: orderPayload.total_amount,
+          payment_method: orderPayload.payment_method,
+          notes: orderPayload.notes,
+          cashier_id: orderPayload.cashier_id,
+          cashier_name: orderPayload.cashier_name,
+          created_at: orderPayload.created_at,
+          updated_at: orderPayload.updated_at,
+        }),
         headers: { 'Prefer': 'return=minimal' },
       });
     } catch (err) {
@@ -1796,7 +1937,28 @@ async function placeOrder() {
         orderPayload.table_id = null;
         await sbFetch('orders', {
           method: 'POST',
-          body: JSON.stringify(orderPayload),
+          body: JSON.stringify({
+            id: orderPayload.id,
+            order_number: orderPayload.order_number,
+            order_type: orderPayload.order_type,
+            table_id: null,
+            table_number: orderPayload.table_number,
+            customer_name: orderPayload.customer_name,
+            customer_phone: orderPayload.customer_phone,
+            status: orderPayload.status,
+            subtotal: orderPayload.subtotal,
+            tax_rate: 0,
+            tax_amount: 0,
+            delivery_fee: orderPayload.delivery_fee,
+            discount_amount: 0,
+            total_amount: orderPayload.total_amount,
+            payment_method: 'cash',
+            notes: orderPayload.notes,
+            cashier_id: orderPayload.cashier_id,
+            cashier_name: orderPayload.cashier_name,
+            created_at: orderPayload.created_at,
+            updated_at: orderPayload.updated_at,
+          }),
           headers: { 'Prefer': 'return=minimal' },
         });
       } else {
@@ -1825,6 +1987,7 @@ async function placeOrder() {
     });
 
     currentOrderId = orderId;
+    lastSavedOrderPayload = orderPayload;
     showSuccess(orderNumber, grandTotal, orderPayload);
     subscribeToOrderStatus(orderId);
   } catch (e) {
@@ -1834,7 +1997,7 @@ async function placeOrder() {
   }
 }
 
-// ── Success Screen ──
+// ── Success Screen & Receipt UI ──
 function showSuccess(orderNumber, total, orderPayload) {
   document.getElementById('cart-modal').classList.remove('open');
   document.body.style.overflow = '';
@@ -1842,16 +2005,21 @@ function showSuccess(orderNumber, total, orderPayload) {
   document.getElementById('cart-bar').classList.remove('visible');
 
   document.getElementById('order-number-display').textContent = `#${orderNumber}`;
+  updateReceiptCardUI(orderPayload);
+  document.getElementById('success-view').classList.add('show');
+}
 
-  const isTakeaway = orderPayload && orderPayload.order_type === 'takeaway';
-  const isDelivery = orderPayload && orderPayload.order_type === 'delivery';
+function updateReceiptCardUI(orderPayload) {
+  if (!orderPayload) return;
+  const isTakeaway = orderPayload.order_type === 'takeaway';
+  const isDelivery = orderPayload.order_type === 'delivery';
 
-  let typeBadgeText = `🍽️ ${t('tableNumLabel')} ${orderPayload?.table_number || TABLE_NAME}`;
+  let typeBadgeText = `${t('dinein')} — ${t('tableNumLabel')} ${orderPayload.table_number || TABLE_NAME}`;
   let typeBg = 'rgba(2,132,199,0.2)';
   let typeColor = 'var(--primary-light)';
 
   if (isDelivery) {
-    typeBadgeText = `🛵 ${orderPayload?.table_number || t('delivery')}`;
+    typeBadgeText = `${t('delivery')} — ${orderPayload.table_number || ''}`;
     typeBg = 'rgba(5,150,105,0.25)';
     typeColor = '#34d399';
   } else if (isTakeaway) {
@@ -1860,18 +2028,25 @@ function showSuccess(orderNumber, total, orderPayload) {
     typeColor = '#fbbf24';
   }
 
+  const items = orderPayload.items_snapshot || cart.map(c => ({
+    name: c.item.name,
+    price: c.item.base_price,
+    qty: c.qty,
+    total: c.item.base_price * c.qty
+  }));
+
   const receipt = document.getElementById('receipt-card');
   receipt.innerHTML = `
-    <div style="font-weight:800;margin-bottom:10px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;">
+    <div style="font-weight:800;margin-bottom:12px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
       <span>${t('orderDetails')}</span>
-      <span style="font-size:0.85rem;padding:4px 12px;border-radius:14px;font-weight:700;background:${typeBg};color:${typeColor}">
+      <span style="font-size:0.82rem;padding:4px 10px;border-radius:12px;font-weight:700;background:${typeBg};color:${typeColor}">
         ${typeBadgeText}
       </span>
     </div>
-    ${cart.map(c => `
+    ${items.map(it => `
       <div class="receipt-row">
-        <span>${translateName(c.item.name)} × ${c.qty}</span>
-        <span>${formatPrice(c.item.base_price * c.qty)}</span>
+        <span>${translateName(it.name)} × ${it.qty}</span>
+        <span>${formatPrice(it.total)}</span>
       </div>
     `).join('')}
     ${isDelivery && orderPayload.delivery_fee > 0 ? `
@@ -1882,11 +2057,120 @@ function showSuccess(orderNumber, total, orderPayload) {
     ` : ''}
     <div class="receipt-total">
       <span>${t('grandTotal')}</span>
-      <span style="color:var(--primary-light)">${formatPrice(total)}</span>
+      <span style="color:var(--primary-light)">${formatPrice(orderPayload.total_amount)}</span>
     </div>
   `;
+}
 
-  document.getElementById('success-view').classList.add('show');
+// ── Download Receipt PDF Function ──
+function downloadReceiptPDF() {
+  if (!lastSavedOrderPayload) {
+    window.print();
+    return;
+  }
+
+  const payload = lastSavedOrderPayload;
+  const isFr = currentLang === 'fr';
+  const restName = currentRestaurantName || 'Restaurant';
+  const orderNum = payload.order_number;
+  const now = new Date().toLocaleString(isFr ? 'fr-FR' : 'ar-DZ');
+
+  const items = payload.items_snapshot || [];
+  const total = payload.total_amount;
+  const typeText = payload.order_type === 'delivery'
+    ? (isFr ? `Livraison (${payload.table_number})` : `توصيل (${payload.table_number})`)
+    : (payload.order_type === 'takeaway'
+        ? (isFr ? 'À emporter' : 'سفري')
+        : (isFr ? `Sur place (Table ${payload.table_number})` : `محلي (طاولة ${payload.table_number})`));
+
+  // Build clean printable receipt popup / window
+  const printWindow = window.open('', '_blank', 'width=420,height=600');
+  if (!printWindow) {
+    // Fallback directly to native browser print if popup blocked
+    window.print();
+    return;
+  }
+
+  const receiptHtml = `
+  <!DOCTYPE html>
+  <html lang="${currentLang}" dir="${isFr ? 'ltr' : 'rtl'}">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reçu / وصل #${orderNum} - ${restName}</title>
+    <style>
+      body {
+        font-family: 'Courier New', Courier, monospace, sans-serif;
+        padding: 20px;
+        color: #000;
+        background: #fff;
+        max-width: 320px;
+        margin: 0 auto;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .center { text-align: center; }
+      .bold { font-weight: bold; }
+      .title { font-size: 18px; margin-bottom: 4px; }
+      .order-badge {
+        font-size: 22px;
+        border: 2px dashed #000;
+        padding: 6px 12px;
+        margin: 10px auto;
+        display: inline-block;
+      }
+      .divider { border-bottom: 1px dashed #000; margin: 8px 0; }
+      .row { display: flex; justify-content: space-between; margin: 4px 0; }
+      .total-row { font-size: 16px; font-weight: bold; margin-top: 8px; border-top: 2px solid #000; padding-top: 6px; }
+      .footer { margin-top: 16px; text-align: center; font-size: 11px; color: #555; }
+      @media print {
+        body { padding: 0; margin: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <div class="title bold">${restName}</div>
+      <div>${typeText}</div>
+      <div class="order-badge bold">#${orderNum}</div>
+      <div style="font-size:11px;">${now}</div>
+    </div>
+    <div class="divider"></div>
+    <div class="bold" style="margin-bottom:6px;">${isFr ? 'Articles commandés :' : 'الأصناف المطلوبة :'}</div>
+    ${items.map(it => `
+      <div class="row">
+        <span>${translateName(it.name)} × ${it.qty}</span>
+        <span class="bold">${Number(it.total).toFixed(2)} ${t('currency')}</span>
+      </div>
+    `).join('')}
+    ${payload.delivery_fee > 0 ? `
+      <div class="row">
+        <span>${t('deliveryFee')}</span>
+        <span>+${Number(payload.delivery_fee).toFixed(2)} ${t('currency')}</span>
+      </div>
+    ` : ''}
+    <div class="divider"></div>
+    <div class="row total-row">
+      <span>${isFr ? 'TOTAL :' : 'الإجمالي :'}</span>
+      <span>${Number(total).toFixed(2)} ${t('currency')}</span>
+    </div>
+    ${payload.customer_name ? `<div style="margin-top:8px;font-size:12px;"><strong>${isFr ? 'Client' : 'العميل'}:</strong> ${payload.customer_name}</div>` : ''}
+    ${payload.customer_phone ? `<div style="font-size:12px;"><strong>${isFr ? 'Tél' : 'الهاتف'}:</strong> ${payload.customer_phone}</div>` : ''}
+    <div class="footer">
+      <div>Merci pour votre commande !</div>
+      <div>شكراً لثقتكم وزيارتكم</div>
+    </div>
+    <script>
+      window.onload = function() {
+        window.print();
+      };
+    <\/script>
+  </body>
+  </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(receiptHtml);
+  printWindow.document.close();
 }
 
 // ── Realtime Status Tracking ──
@@ -1923,6 +2207,7 @@ function updateStatusTracker(status) {
 function resetToMenu() {
   cart = [];
   currentOrderId = null;
+  lastSavedOrderPayload = null;
   document.getElementById('success-view').classList.remove('show');
   document.getElementById('menu-view').style.display = 'block';
   if (document.getElementById('customer-name')) document.getElementById('customer-name').value = '';
