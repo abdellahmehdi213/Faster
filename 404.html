@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Menu & Commande en Ligne | قائمة الطعام والطلب أونلاين</title>
+  <title>Menu & Commande en Ligne | Faster POS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
@@ -315,7 +315,7 @@
       justify-content: space-between;
       margin-top: 10px;
       padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,256,0.06);
     }
     .item-price {
       color: var(--primary-light);
@@ -1213,42 +1213,23 @@ const FOOD_TRANSLATIONS = {
   'طاولة': 'Table'
 };
 
-// ── Smart Auto-Language Detection ──
-function detectInitialLanguage() {
+// ── Default Language is ALWAYS French (fr) ──
+function getInitialLanguage() {
   const urlLang = new URLSearchParams(location.search).get('lang');
   if (urlLang === 'fr' || urlLang === 'ar') return urlLang;
-  const savedLang = localStorage.getItem('web_lang');
-  if (savedLang) return savedLang;
-  const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-  return navLang.startsWith('ar') ? 'ar' : 'fr';
+  const saved = localStorage.getItem('web_lang');
+  if (saved === 'fr' || saved === 'ar') return saved;
+  return 'fr'; // Always default to French
 }
 
-let currentLang = detectInitialLanguage();
+let currentLang = getInitialLanguage();
 
+// ── Language Switcher with Instant Reactive Reload ──
 function setLanguage(lang) {
-  currentLang = lang;
   localStorage.setItem('web_lang', lang);
-
-  const isFr = lang === 'fr';
-  const html = document.getElementById('html-root');
-  html.setAttribute('lang', lang);
-  html.setAttribute('dir', isFr ? 'ltr' : 'rtl');
-
-  document.body.className = isFr ? '' : 'lang-ar';
-
-  const btnAr = document.getElementById('btn-lang-ar');
-  const btnFr = document.getElementById('btn-lang-fr');
-  if (btnAr) btnAr.className = 'lang-btn-mini' + (!isFr ? ' active' : '');
-  if (btnFr) btnFr.className = 'lang-btn-mini' + (isFr ? ' active' : '');
-
-  applyStaticTranslations();
-  setOrderType(currentOrderType);
-  populateDeliveryZonesDropdown();
-  updateCartUI();
-  renderMenu();
-  if (lastSavedOrderPayload) {
-    updateReceiptCardUI(lastSavedOrderPayload);
-  }
+  const u = new URL(location.href);
+  u.searchParams.set('lang', lang);
+  location.replace(u.toString());
 }
 
 function t(key) {
@@ -1264,6 +1245,16 @@ function translateName(name) {
 
 function applyStaticTranslations() {
   const isFr = currentLang === 'fr';
+  const html = document.getElementById('html-root');
+  html.setAttribute('lang', currentLang);
+  html.setAttribute('dir', isFr ? 'ltr' : 'rtl');
+  document.body.className = isFr ? '' : 'lang-ar';
+
+  const btnAr = document.getElementById('btn-lang-ar');
+  const btnFr = document.getElementById('btn-lang-fr');
+  if (btnAr) btnAr.className = 'lang-btn-mini' + (!isFr ? ' active' : '');
+  if (btnFr) btnFr.className = 'lang-btn-mini' + (isFr ? ' active' : '');
+
   const titleEl = document.getElementById('restaurant-title');
   if (!restaurantNameLoaded && titleEl) {
     titleEl.textContent = t('title');
@@ -2086,7 +2077,6 @@ function downloadReceiptPDF() {
   // Build clean printable receipt popup / window
   const printWindow = window.open('', '_blank', 'width=420,height=600');
   if (!printWindow) {
-    // Fallback directly to native browser print if popup blocked
     window.print();
     return;
   }
@@ -2233,7 +2223,7 @@ function showError(msg) {
 }
 
 // ── Initialize App ──
-setLanguage(currentLang);
+applyStaticTranslations();
 loadMenu();
 </script>
 </body>
