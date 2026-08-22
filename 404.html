@@ -1124,6 +1124,7 @@ const DICT = {
     zoneWarn: '⚠️ Veuillez sélectionner une zone de livraison dans la liste.',
     phoneWarn: '⚠️ Veuillez saisir votre numéro de téléphone pour le livreur.',
     addressWarn: '⚠️ Veuillez indiquer votre adresse complète (quartier, rue, bâtiment...).',
+    tableWarn: '⚠️ Veuillez indiquer le numéro de votre table.',
     currency: 'DZD',
     custDelivery: 'Client Livraison',
     custTakeaway: 'Client À emporter',
@@ -1184,6 +1185,7 @@ const DICT = {
     zoneWarn: '⚠️ يرجى اختيار منطقة التوصيل من القائمة للمتابعة.',
     phoneWarn: '⚠️ يرجى إدخال رقم هاتفك ليتواصل معك مندوب التوصيل.',
     addressWarn: '⚠️ يرجى إدخال عنوان التوصيل بالتفصيل (الحي، الشارع، رقم العمارة...).',
+    tableWarn: '⚠️ يرجى كتابة رقم طاولتك للمتابعة.',
     currency: 'د.ج',
     custDelivery: 'زبون توصيل',
     custTakeaway: 'زبون سفري',
@@ -1243,6 +1245,52 @@ function translateName(name) {
   return name;
 }
 
+// ── Clean Parameter & Mode Detection ──
+const params = new URLSearchParams(location.search);
+const rawTableParam = params.get('table');
+const hasTableParam = rawTableParam !== null && rawTableParam.trim().length > 0;
+const isWallMode = params.get('mode') === 'wall' || !hasTableParam;
+
+let TABLE_NAME = '';
+let TABLE_ID = '';
+
+if (!isWallMode && hasTableParam) {
+  let cleanT = decodeURIComponent(rawTableParam).trim();
+  cleanT = cleanT.replace(/^طاولة\s*/i, '').replace(/^table\s*/i, '').trim();
+  TABLE_NAME = cleanT || '1';
+  TABLE_ID = decodeURIComponent(params.get('tid') || '');
+  localStorage.setItem('last_table', TABLE_NAME);
+  if (TABLE_ID) localStorage.setItem('last_tid', TABLE_ID);
+} else {
+  // Clear any old table persistence so Wall QR never mistakenly remembers old tables!
+  localStorage.removeItem('last_table');
+  localStorage.removeItem('last_tid');
+}
+
+let rawProjectId  = params.get('r') || localStorage.getItem('sb_project_id') || '';
+let rawKey        = params.get('k') || localStorage.getItem('sb_anon_key') || '';
+
+let PROJECT_ID    = rawProjectId.replace(/[^\x00-\x7F]/g, '').trim();
+let SUPABASE_KEY  = rawKey.replace(/[^\x00-\x7F]/g, '').trim();
+
+if (params.get('r')) localStorage.setItem('sb_project_id', PROJECT_ID);
+if (params.get('k')) localStorage.setItem('sb_anon_key', SUPABASE_KEY);
+
+let SUPABASE_URL  = PROJECT_ID ? (PROJECT_ID.startsWith('http') ? PROJECT_ID : `https://${PROJECT_ID}.supabase.co`) : '';
+
+// ── State ──
+let categories = [];
+let menuItems  = [];
+let deliveryZones = [];
+let cart = [];       // [{item, qty}]
+let activeCatId = null;
+let currentOrderId = null;
+// Wall Mode defaults to 'takeaway' (🥡 À emporter); Table QR defaults to 'dine_in' (🍽️ Sur place)
+let currentOrderType = isWallMode ? 'takeaway' : 'dine_in';
+let restaurantNameLoaded = false;
+let currentRestaurantName = 'Restaurant';
+let lastSavedOrderPayload = null;
+
 function applyStaticTranslations() {
   const isFr = currentLang === 'fr';
   const html = document.getElementById('html-root');
@@ -1277,6 +1325,9 @@ function applyStaticTranslations() {
 
   document.getElementById('label-table-num').textContent = t('tableNumLabel');
   document.getElementById('table-input-field').placeholder = t('tableNumPlaceholder');
+  if (!isWallMode && TABLE_NAME) {
+    document.getElementById('table-input-field').value = TABLE_NAME;
+  }
 
   document.getElementById('label-delivery-zone').textContent = t('deliveryZoneLabel');
   document.getElementById('opt-choose-zone').textContent = t('deliveryZoneSelect');
@@ -1309,45 +1360,9 @@ function applyStaticTranslations() {
   } else {
     document.getElementById('table-badge').textContent = t('tableBadgeTable').replace('{t}', TABLE_NAME);
   }
+
+  setOrderType(currentOrderType);
 }
-
-// ── Config from URL params or localStorage ──
-const params = new URLSearchParams(location.search);
-const hasTableParam = params.has('table');
-const isWallMode = params.get('mode') === 'wall' || !hasTableParam;
-
-let rawTable = decodeURIComponent(params.get('table') || localStorage.getItem('last_table') || '1').trim();
-rawTable = rawTable.replace(/^طاولة\s*/i, '').replace(/^table\s*/i, '').trim();
-const TABLE_NAME  = rawTable || '1';
-const TABLE_ID    = decodeURIComponent(params.get('tid') || localStorage.getItem('last_tid') || '');
-
-let rawProjectId  = params.get('r') || localStorage.getItem('sb_project_id') || '';
-let rawKey        = params.get('k') || localStorage.getItem('sb_anon_key') || '';
-
-// Clean ASCII for HTTP headers
-let PROJECT_ID    = rawProjectId.replace(/[^\x00-\x7F]/g, '').trim();
-let SUPABASE_KEY  = rawKey.replace(/[^\x00-\x7F]/g, '').trim();
-
-if (params.get('r')) localStorage.setItem('sb_project_id', PROJECT_ID);
-if (params.get('k')) localStorage.setItem('sb_anon_key', SUPABASE_KEY);
-if (hasTableParam) {
-  localStorage.setItem('last_table', TABLE_NAME);
-  if (params.get('tid')) localStorage.setItem('last_tid', TABLE_ID);
-}
-
-let SUPABASE_URL  = PROJECT_ID ? (PROJECT_ID.startsWith('http') ? PROJECT_ID : `https://${PROJECT_ID}.supabase.co`) : '';
-
-// ── State ──
-let categories = [];
-let menuItems  = [];
-let deliveryZones = [];
-let cart = [];       // [{item, qty}]
-let activeCatId = null;
-let currentOrderId = null;
-let currentOrderType = 'dine_in';
-let restaurantNameLoaded = false;
-let currentRestaurantName = 'Restaurant';
-let lastSavedOrderPayload = null;
 
 // ── Order Type State Handler ──
 function setOrderType(type) {
@@ -1777,7 +1792,11 @@ async function placeOrder() {
   let deliveryPhone = '';
   let deliveryAddress = '';
 
-  if (currentOrderType === 'delivery') {
+  const isTakeaway = currentOrderType === 'takeaway';
+  const isDelivery = currentOrderType === 'delivery';
+  const isDineIn = currentOrderType === 'dine_in';
+
+  if (isDelivery) {
     const zoneSelect = document.getElementById('delivery-zone-select');
     const zoneId = zoneSelect ? zoneSelect.value : '';
     const zone = deliveryZones.find(z => z.id === zoneId);
@@ -1811,6 +1830,27 @@ async function placeOrder() {
     }
   }
 
+  let finalTableNum = '';
+  let finalTableId = null;
+
+  if (isDineIn) {
+    const tableField = document.getElementById('table-input-field');
+    const entered = tableField ? tableField.value.trim() : '';
+    finalTableNum = entered || TABLE_NAME;
+    if (isWallMode && !finalTableNum) {
+      alert(t('tableWarn'));
+      if (tableField) tableField.focus();
+      return;
+    }
+    finalTableId = TABLE_ID || null;
+  } else if (isTakeaway) {
+    finalTableNum = isWallMode ? 'À emporter' : 'À emporter';
+    finalTableId = null;
+  } else if (isDelivery) {
+    finalTableNum = deliveryZoneName ? `Livraison: ${deliveryZoneName}` : 'Livraison';
+    finalTableId = null;
+  }
+
   btn.disabled = true;
   btn.textContent = t('placingOrder');
 
@@ -1827,21 +1867,13 @@ async function placeOrder() {
     const subtotal = cartTotal();
     const grandTotal = subtotal + deliveryFee;
 
-    const isTakeaway = currentOrderType === 'takeaway';
-    const isDelivery = currentOrderType === 'delivery';
-    const isDineIn = currentOrderType === 'dine_in';
-
-    const enteredTable = document.getElementById('table-input-field')
-      ? document.getElementById('table-input-field').value.trim()
-      : TABLE_NAME;
-
-    if (isDineIn && TABLE_ID) {
+    if (isDineIn && finalTableId) {
       try {
         await sbFetch('restaurant_tables', {
           method: 'POST',
           body: JSON.stringify([{
-            id: TABLE_ID,
-            table_number: enteredTable || TABLE_NAME || '1',
+            id: finalTableId,
+            table_number: finalTableNum,
             is_occupied: true,
             updated_at: now,
           }]),
@@ -1854,7 +1886,7 @@ async function placeOrder() {
     if (!finalCustomerName) {
       if (isDelivery) finalCustomerName = t('custDelivery');
       else if (isTakeaway) finalCustomerName = t('custTakeaway');
-      else finalCustomerName = t('custDinein');
+      else finalCustomerName = `${t('custDinein')} ${finalTableNum}`;
     }
 
     let fullNotes = '';
@@ -1869,10 +1901,8 @@ async function placeOrder() {
       id: orderId,
       order_number: orderNumber,
       order_type: isDelivery ? 'delivery' : (isTakeaway ? 'takeaway' : 'dine_in'),
-      table_id: isDineIn ? (TABLE_ID || null) : null,
-      table_number: isDelivery
-        ? (deliveryZoneName ? `Livraison: ${deliveryZoneName}` : 'Livraison')
-        : (isTakeaway ? 'À emporter' : (enteredTable || TABLE_NAME || '1')),
+      table_id: finalTableId,
+      table_number: finalTableNum,
       customer_name: finalCustomerName,
       customer_phone: isDelivery ? deliveryPhone : '',
       status: 'new',
@@ -1885,7 +1915,7 @@ async function placeOrder() {
       payment_method: 'cash',
       notes: fullNotes,
       cashier_id: isDelivery ? 'web_delivery' : (isTakeaway ? 'wall_qr' : 'table_qr'),
-      cashier_name: isDelivery ? 'Online Delivery (Web)' : (isTakeaway ? 'Wall QR (Takeaway)' : 'Table QR'),
+      cashier_name: isDelivery ? 'Online Delivery (Web)' : (isTakeaway ? 'Wall QR (Takeaway)' : `Table QR (${finalTableNum})`),
       created_at: now,
       updated_at: now,
       items_snapshot: cart.map(c => ({
@@ -2005,7 +2035,7 @@ function updateReceiptCardUI(orderPayload) {
   const isTakeaway = orderPayload.order_type === 'takeaway';
   const isDelivery = orderPayload.order_type === 'delivery';
 
-  let typeBadgeText = `${t('dinein')} — ${t('tableNumLabel')} ${orderPayload.table_number || TABLE_NAME}`;
+  let typeBadgeText = `${t('dinein')} — ${t('tableNumLabel')} ${orderPayload.table_number || ''}`;
   let typeBg = 'rgba(2,132,199,0.2)';
   let typeColor = 'var(--primary-light)';
 
@@ -2074,7 +2104,6 @@ function downloadReceiptPDF() {
         ? (isFr ? 'À emporter' : 'سفري')
         : (isFr ? `Sur place (Table ${payload.table_number})` : `محلي (طاولة ${payload.table_number})`));
 
-  // Build clean printable receipt popup / window
   const printWindow = window.open('', '_blank', 'width=420,height=600');
   if (!printWindow) {
     window.print();
