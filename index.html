@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Menu & Commande en Ligne | Faster POS</title>
+  <title>Faster Food | Application de Commande</title>
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Faster Food" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
@@ -37,6 +47,47 @@
     }
     body.lang-ar {
       font-family: var(--font-ar);
+    }
+
+    /* ── PWA Install Banner ── */
+    .pwa-install-bar {
+      display: none;
+      background: linear-gradient(135deg, #1e2e4f 0%, #131f37 100%);
+      border-bottom: 1px solid var(--primary);
+      padding: 8px 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .pwa-install-bar.show { display: flex; }
+    .pwa-info { display: flex; align-items: center; gap: 10px; }
+    .pwa-icon { font-size: 1.4rem; }
+    .pwa-text { font-size: 0.82rem; font-weight: 700; color: #fff; line-height: 1.25; }
+    .pwa-subtext { font-size: 0.72rem; color: var(--text-dim); }
+    .pwa-actions { display: flex; align-items: center; gap: 6px; }
+    .pwa-install-btn {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(2,132,199,0.4);
+    }
+    .pwa-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 6px;
     }
 
     /* ── Header ── */
@@ -332,9 +383,7 @@
       font-size: 1.25rem;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: transform 0.12s, box-shadow 0.15s;
       box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
     }
@@ -350,9 +399,7 @@
       height: 24px;
       font-size: 0.8rem;
       font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       border: 2px solid var(--surface);
       z-index: 2;
@@ -837,7 +884,7 @@
         padding: 0 !important;
         font-family: monospace, sans-serif !important;
       }
-      .header, .tabs-wrap, .cart-bar, .modal-backdrop, #menu-view, .status-tracker, .success-actions, #error-screen, #loading, .success-icon, #new-order-btn, #btn-download-pdf, .order-status-label {
+      .pwa-install-bar, .header, .tabs-wrap, .cart-bar, .modal-backdrop, #menu-view, .status-tracker, .success-actions, #error-screen, #loading, .success-icon, #new-order-btn, #btn-download-pdf, .order-status-label {
         display: none !important;
       }
       .success-screen {
@@ -882,6 +929,21 @@
   </style>
 </head>
 <body>
+
+<!-- PWA Quick Install Banner -->
+<div class="pwa-install-bar" id="pwa-install-bar">
+  <div class="pwa-info">
+    <span class="pwa-icon">📲</span>
+    <div>
+      <div class="pwa-text" id="pwa-txt-title">Installer l'application Faster Food</div>
+      <div class="pwa-subtext" id="pwa-txt-sub">Accédez à vos commandes en un clic depuis votre écran d'accueil</div>
+    </div>
+  </div>
+  <div class="pwa-actions">
+    <button type="button" class="pwa-install-btn" id="pwa-install-btn" onclick="triggerPWAInstall()">Installer ⬇️</button>
+    <button type="button" class="pwa-close-btn" onclick="closePWABanner()">✕</button>
+  </div>
+</div>
 
 <!-- Header -->
 <div class="header">
@@ -1067,6 +1129,47 @@
 </div>
 
 <script>
+// ── Register Service Worker for PWA ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+// ── PWA Install Prompt Handler ──
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('pwa-install-bar');
+  if (banner && !sessionStorage.getItem('pwa_dismissed')) {
+    banner.classList.add('show');
+  }
+});
+
+function triggerPWAInstall() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choice) => {
+      if (choice.outcome === 'accepted') {
+        closePWABanner();
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    // iOS Safari guide
+    alert(currentLang === 'fr' 
+      ? "Pour installer sur iPhone : appuyez sur le bouton Partager ⎋ puis 'Sur l'écran d'accueil' ➕"
+      : "للتثبيت على الآيفون: اضغط زر المشاركة ⎋ في المتصفح ثم اختر 'إضافة إلى الشاشة الرئيسية' ➕");
+  }
+}
+
+function closePWABanner() {
+  const banner = document.getElementById('pwa-install-bar');
+  if (banner) banner.classList.remove('show');
+  sessionStorage.setItem('pwa_dismissed', '1');
+}
+
 // ── Multilingual Dictionary (French & Arabic) ──
 const DICT = {
   fr: {
@@ -1125,6 +1228,9 @@ const DICT = {
     phoneWarn: '⚠️ Veuillez saisir votre numéro de téléphone pour le livreur.',
     addressWarn: '⚠️ Veuillez indiquer votre adresse complète (quartier, rue, bâtiment...).',
     tableWarn: '⚠️ Veuillez indiquer le numéro de votre table.',
+    pwaTitle: 'Installer l\'application Faster Food',
+    pwaSub: 'Accédez à vos commandes en un clic depuis votre écran',
+    pwaBtn: 'Installer 📲',
     currency: 'DZD',
     custDelivery: 'Client Livraison',
     custTakeaway: 'Client À emporter',
@@ -1186,6 +1292,9 @@ const DICT = {
     phoneWarn: '⚠️ يرجى إدخال رقم هاتفك ليتواصل معك مندوب التوصيل.',
     addressWarn: '⚠️ يرجى إدخال عنوان التوصيل بالتفصيل (الحي، الشارع، رقم العمارة...).',
     tableWarn: '⚠️ يرجى كتابة رقم طاولتك للمتابعة.',
+    pwaTitle: 'تثبيت تطبيق Faster Food على هاتفك',
+    pwaSub: 'اطلب وجباتك بسرعة بلمسة واحدة من شاشة هاتفك الرئيسية',
+    pwaBtn: 'تثبيت التطبيق 📲',
     currency: 'د.ج',
     custDelivery: 'زبون توصيل',
     custTakeaway: 'زبون سفري',
@@ -1307,6 +1416,11 @@ function applyStaticTranslations() {
   if (!restaurantNameLoaded && titleEl) {
     titleEl.textContent = t('title');
   }
+
+  // PWA texts
+  document.getElementById('pwa-txt-title').textContent = t('pwaTitle');
+  document.getElementById('pwa-txt-sub').textContent = t('pwaSub');
+  document.getElementById('pwa-install-btn').textContent = t('pwaBtn');
 
   document.getElementById('loading-txt').textContent = t('loading');
   document.getElementById('error-title').textContent = t('errorTitle');
