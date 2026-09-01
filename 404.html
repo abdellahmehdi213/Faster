@@ -1465,17 +1465,17 @@ const DICT = {
     stepPrep: '🔥 En cuisine',
     stepReady: '🍽️ Servie à table',
     downloadPdf: 'Télécharger le Reçu (PDF)',
-    newOrder: 'Commander d'autres articles 🔄',
+    newOrder: 'Commander d\'autres articles 🔄',
     orderDetails: '🧾 Détails de la commande',
     tableWarn: '⚠️ Veuillez indiquer le numéro de votre table.',
-    pwaTitle: 'Installer l'application Faster Food',
+    pwaTitle: 'Installer l\'application Faster Food',
     pwaSub: 'Accédez au menu de votre table en un clic',
     pwaBtn: 'Installer 📲',
     currency: 'DZD',
     custDinein: 'Client Table',
     boxBannerTitle: 'Offres Spéciales Box & Combos',
     boxBannerSub: 'Personnalisez votre formule complète avec boissons et sauces',
-    itemDetailsTitle: 'Détails de l'article',
+    itemDetailsTitle: 'Détails de l\'article',
     ingTitle: 'Ingrédients :',
     sizesTitle: '📏 Choisir la Taille',
     standardSize: 'Standard',
@@ -1635,11 +1635,21 @@ if (rawTableParam.trim().length > 0) {
 const DEFAULT_SUPABASE_URL = 'https://wanbojqktyvfneubnbtv.supabase.co';
 const DEFAULT_SUPABASE_KEY = 'sb_publishable_7WAc24xDIS7wIKozQA-eKA_UGRXPWmN';
 
-let rawUrl = params.get('url') || localStorage.getItem('sb_project_url') || DEFAULT_SUPABASE_URL;
-let rawKey = params.get('k') || localStorage.getItem('sb_anon_key') || DEFAULT_SUPABASE_KEY;
+// Resolve project URL from 'r' (e.g. from QR code) or 'url'
+let rParam = params.get('r') || params.get('ref') || params.get('project');
+let urlParam = params.get('url');
+let keyParam = params.get('k') || params.get('key');
 
-let SUPABASE_URL = rawUrl.trim().replace(/\/+$/, '');
-let SUPABASE_KEY = rawKey.trim();
+let SUPABASE_URL = DEFAULT_SUPABASE_URL;
+if (rParam && rParam.trim().length > 0) {
+  let cleanR = rParam.trim();
+  SUPABASE_URL = cleanR.startsWith('http') ? cleanR : `https://${cleanR}.supabase.co`;
+} else if (urlParam && urlParam.trim().length > 0) {
+  SUPABASE_URL = urlParam.trim();
+}
+
+let SUPABASE_KEY = (keyParam && keyParam.trim().length > 0) ? keyParam.trim() : DEFAULT_SUPABASE_KEY;
+SUPABASE_URL = SUPABASE_URL.replace(/\/+$/, '');
 
 // ── State ──
 let categories = [];
