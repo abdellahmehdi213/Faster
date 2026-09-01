@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Faster Food | Application de Commande</title>
+  <title>Faster Food | Commande à Table</title>
 
   <!-- PWA Meta Tags -->
   <link rel="manifest" href="manifest.json" />
@@ -16,13 +16,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --primary: #0284c7;
       --primary-light: #38bdf8;
       --primary-dark: #0369a1;
       --accent: #0ea5e9;
+      --box-accent: #f59e0b;
+      --box-bg: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
       --bg: #0b1329;
       --surface: #131f37;
       --surface2: #1e2e4f;
@@ -30,8 +32,6 @@
       --text: #f0f6fc;
       --text-dim: #94a3b8;
       --success: #10b981;
-      --delivery: #059669;
-      --takeaway: #d97706;
       --radius: 16px;
       --font-ar: 'Tajawal', sans-serif;
       --font-lat: 'Inter', system-ui, -apple-system, sans-serif;
@@ -93,7 +93,7 @@
     /* ── Header ── */
     .header {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      padding: 12px 16px 14px;
+      padding: 14px 16px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -107,10 +107,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 54px;
+      min-height: 56px;
     }
     .header h1 {
-      font-size: 1.22rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #fff;
       margin: 0;
@@ -124,16 +124,18 @@
       max-width: 100%;
     }
     .header .table-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: rgba(255,255,255,0.22);
       backdrop-filter: blur(8px);
       color: #fff;
-      padding: 2px 12px;
+      padding: 3px 14px;
       border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 700;
       border: 1px solid rgba(255,255,255,0.3);
-      margin-top: 4px;
+      margin-top: 5px;
     }
 
     /* Compact Language Switcher */
@@ -190,6 +192,67 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Box Combos Highlight Section ── */
+    .boxes-section {
+      max-width: 900px;
+      margin: 14px auto 8px;
+      padding: 0 12px;
+    }
+    .boxes-banner {
+      background: var(--box-bg);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      border: 1.5px solid rgba(45, 212, 191, 0.4);
+      box-shadow: 0 6px 20px rgba(15, 118, 110, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .boxes-banner:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15, 118, 110, 0.5);
+    }
+    .boxes-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .boxes-banner-icon {
+      font-size: 2.2rem;
+      background: rgba(255,255,255,0.15);
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .boxes-banner-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .boxes-banner-sub {
+      font-size: 0.78rem;
+      color: #ccfbf1;
+      opacity: 0.95;
+    }
+    .boxes-badge {
+      background: #f59e0b;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+    }
+
     /* ── Category Tabs ── */
     .tabs-wrap {
       overflow-x: auto;
@@ -198,7 +261,7 @@
       border-bottom: 1px solid var(--border);
       scrollbar-width: none;
       position: sticky;
-      top: 70px;
+      top: 72px;
       z-index: 95;
     }
     .tabs-wrap::-webkit-scrollbar { display: none; }
@@ -210,7 +273,7 @@
       margin: 0 auto;
     }
     .tab-btn {
-      padding: 7px 16px;
+      padding: 8px 16px;
       border-radius: 20px;
       border: 1.5px solid var(--border);
       background: var(--surface2);
@@ -229,6 +292,17 @@
       font-weight: 700;
       box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
     }
+    .tab-btn.box-tab {
+      border-color: rgba(45, 212, 191, 0.5);
+      background: rgba(15, 118, 110, 0.4);
+      color: #5eead4;
+    }
+    .tab-btn.box-tab.active {
+      background: #0d9488;
+      border-color: #2dd4bf;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(13, 148, 136, 0.4);
+    }
 
     /* ── Menu Grid & Items ── */
     .menu-container {
@@ -236,10 +310,10 @@
       margin: 0 auto;
     }
     .section-title {
-      font-size: 1.02rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--primary-light);
-      padding: 16px 16px 6px;
+      padding: 18px 16px 8px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -283,6 +357,10 @@
     }
     .item-card:active { transform: scale(0.98); }
     .item-card.unavailable { opacity: 0.45; pointer-events: none; }
+    .item-card.is-box {
+      border-color: rgba(45, 212, 191, 0.4);
+      background: linear-gradient(180deg, #132737 0%, #131f37 100%);
+    }
 
     .item-img-wrap {
       width: 100%;
@@ -336,6 +414,21 @@
     }
     [dir="rtl"] .img-zoom-btn { right: auto; left: 6px; }
     .img-zoom-btn:hover { opacity: 1; }
+
+    .size-tag-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(2, 132, 199, 0.85);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    [dir="rtl"] .size-tag-badge { right: auto; left: 8px; }
 
     .item-body {
       padding: 10px 12px 12px;
@@ -451,12 +544,12 @@
     }
     .checkout-btn:active { opacity: 0.88; transform: scale(0.97); }
 
-    /* ── Modals ── */
+    /* ── Modals Common ── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(5px);
       z-index: 200;
       display: none;
       align-items: flex-end;
@@ -503,26 +596,171 @@
     }
     .modal-close:hover { background: var(--border); }
 
+    /* ── Choice Chips & Customizer Styles ── */
+    .choice-group {
+      margin: 12px 20px;
+    }
+    .choice-group-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .choice-group-counter {
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      background: rgba(2,132,199,0.15);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .choice-chip {
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .choice-chip:hover {
+      border-color: var(--primary-light);
+    }
+    .choice-chip.selected {
+      background: var(--primary);
+      border-color: var(--primary-light);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+    }
+    .choice-chip.disabled {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Fixed Ingredients Card */
+    .ing-card {
+      background: rgba(2, 132, 199, 0.1);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 12px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .ing-card-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .ing-card-title { font-size: 0.85rem; font-weight: 800; color: var(--primary-light); margin-bottom: 2px; }
+    .ing-card-text { font-size: 0.82rem; color: var(--text); line-height: 1.4; }
+
+    /* Quantity and Action Row inside Item/Box Modal */
+    .modal-action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+    .modal-qty-box {
+      display: flex;
+      align-items: center;
+      background: var(--surface2);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      padding: 4px;
+    }
+    .modal-qty-btn {
+      width: 36px; height: 36px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.25rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+    .modal-qty-btn:hover { background: var(--border); }
+    .modal-qty-val {
+      min-width: 32px;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .modal-submit-btn {
+      flex: 1;
+      padding: 14px;
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.45);
+      transition: transform 0.1s, opacity 0.15s;
+    }
+    .modal-submit-btn:active { transform: scale(0.98); }
+
     /* Cart Modal List */
     .cart-list { padding: 8px 20px; }
     .cart-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       padding: 12px 0;
       border-bottom: 1px solid var(--border);
       gap: 12px;
     }
     .cart-item-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
       object-fit: cover;
       background: var(--surface2);
+      flex-shrink: 0;
     }
     .cart-item-info { flex: 1; }
-    .cart-item-name { font-weight: 700; font-size: 0.95rem; }
-    .cart-item-price { color: var(--primary-light); font-weight: 700; font-size: 0.9rem; }
+    .cart-item-name { font-weight: 700; font-size: 0.95rem; color: #fff; }
+    .cart-item-size-badge {
+      display: inline-block;
+      background: rgba(2, 132, 199, 0.2);
+      color: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+    .cart-item-choices {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+    .cart-item-price { color: var(--primary-light); font-weight: 800; font-size: 0.92rem; margin-top: 4px; }
     .qty-controls { display: flex; align-items: center; gap: 8px; }
     .qty-btn {
       width: 30px; height: 30px;
@@ -539,70 +777,11 @@
     .qty-btn:hover { background: var(--primary); color: #fff; }
     .qty-num { font-weight: 800; min-width: 22px; text-align: center; }
 
-    /* Order Type Switcher */
-    .order-type-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-      margin: 8px 20px 12px;
-      background: var(--surface2);
-      padding: 4px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-    }
-    .order-type-btn {
-      padding: 10px 4px;
-      border-radius: 10px;
-      border: none;
-      background: transparent;
-      color: var(--text-dim);
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-    @media (min-width: 420px) {
-      .order-type-btn { flex-direction: row; font-size: 0.9rem; gap: 6px; }
-    }
-    .order-type-btn.active {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
-    }
-    .order-type-btn.active.takeaway {
-      background: var(--takeaway);
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
-    }
-    .order-type-btn.active.delivery {
-      background: var(--delivery);
-      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
-    }
-    .order-type-banner {
-      background: rgba(2, 132, 199, 0.12);
-      border: 1px dashed var(--primary);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin: 0 20px 14px;
-      font-size: 0.85rem;
-      color: var(--primary-light);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.45;
-    }
-
-    /* Checkout Form */
+    /* Checkout Form - Table Only */
     .form-group { padding: 8px 20px; }
     .form-label {
       font-size: 0.88rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-dim);
       margin-bottom: 6px;
       display: flex;
@@ -625,8 +804,13 @@
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
     }
-    textarea.form-input { resize: vertical; min-height: 64px; }
-    select.form-input { cursor: pointer; }
+    .table-field-highlight {
+      border-color: var(--primary-light);
+      background: rgba(2, 132, 199, 0.1);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+    }
 
     /* Summary Breakdown */
     .cart-summary-box {
@@ -636,21 +820,11 @@
       border-radius: 12px;
       border: 1px solid var(--border);
     }
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.92rem;
-      margin-bottom: 6px;
-      color: var(--text-dim);
-    }
     .cart-total-row {
       display: flex;
       justify-content: space-between;
-      padding: 10px 20px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      border-top: 1px solid var(--border);
-      margin-top: 6px;
+      font-weight: 900;
+      font-size: 1.25rem;
       color: #fff;
     }
 
@@ -884,7 +1058,7 @@
         padding: 0 !important;
         font-family: monospace, sans-serif !important;
       }
-      .pwa-install-bar, .header, .tabs-wrap, .cart-bar, .modal-backdrop, #menu-view, .status-tracker, .success-actions, #error-screen, #loading, .success-icon, #new-order-btn, #btn-download-pdf, .order-status-label {
+      .pwa-install-bar, .header, .boxes-section, .tabs-wrap, .cart-bar, .modal-backdrop, #menu-view, .status-tracker, .success-actions, #error-screen, #loading, .success-icon, #new-order-btn, #btn-download-pdf, .order-status-label {
         display: none !important;
       }
       .success-screen {
@@ -936,7 +1110,7 @@
     <span class="pwa-icon">📲</span>
     <div>
       <div class="pwa-text" id="pwa-txt-title">Installer l'application Faster Food</div>
-      <div class="pwa-subtext" id="pwa-txt-sub">Accédez à vos commandes en un clic depuis votre écran d'accueil</div>
+      <div class="pwa-subtext" id="pwa-txt-sub">Accédez au menu de votre table en un clic</div>
     </div>
   </div>
   <div class="pwa-actions">
@@ -954,31 +1128,46 @@
       <button type="button" class="lang-btn-mini" id="btn-lang-ar" onclick="setLanguage('ar')">AR 🇩🇿</button>
     </div>
 
-    <h1 id="restaurant-title">Menu & Commande en Ligne</h1>
-    <span class="table-badge" id="table-badge">Chargement...</span>
+    <h1 id="restaurant-title">Commande à Table</h1>
+    <span class="table-badge" id="table-badge">🍽️ Chargement de la table...</span>
   </div>
 </div>
 
 <!-- Loading -->
 <div id="loading" class="loader">
   <div class="spinner"></div>
-  <p id="loading-txt">Chargement du menu...</p>
+  <p id="loading-txt">Chargement du menu et des offres...</p>
 </div>
 
 <!-- Error / Setup Screen -->
 <div id="error-screen" class="error-screen">
   <div class="icon" id="error-icon">⚠️</div>
   <h2 id="error-title">Impossible de charger le menu</h2>
-  <p id="error-msg">Veuillez scanner le QR code de table ou l'affiche murale pour accéder au menu.</p>
+  <p id="error-msg">Veuillez scanner le QR code situé sur votre table pour accéder à la commande.</p>
   <div id="direct-access-guide" class="direct-access-card" style="display:none;">
-    <div style="font-weight:bold;color:#fff;margin-bottom:6px;" id="guide-title">💡 Comment accéder au menu :</div>
-    <div id="guide-body">Scannez le QR code imprimé avec l'appareil photo de votre smartphone pour afficher le menu et identifier votre table.</div>
+    <div style="font-weight:bold;color:#fff;margin-bottom:6px;" id="guide-title">💡 Comment commander à table :</div>
+    <div id="guide-body">Scannez le QR code imprimé sur votre table avec l'appareil photo de votre smartphone pour afficher le menu et commander directement.</div>
   </div>
   <button id="retry-btn" onclick="location.reload()" style="margin-top:16px;padding:10px 24px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;">Réessayer 🔄</button>
 </div>
 
 <!-- Menu View -->
 <div id="menu-view" style="display:none" class="menu-container">
+  
+  <!-- Box Combos Highlight Banner (If any boxes exist) -->
+  <div class="boxes-section" id="boxes-banner-container" style="display:none;">
+    <div class="boxes-banner" onclick="scrollToBoxes()">
+      <div class="boxes-banner-content">
+        <div class="boxes-banner-icon">🎁</div>
+        <div>
+          <div class="boxes-banner-title" id="box-banner-title">Offres Spéciales Box & Combos</div>
+          <div class="boxes-banner-sub" id="box-banner-sub">Personnalisez votre formule complète avec boissons et sauces</div>
+        </div>
+      </div>
+      <span class="boxes-badge" id="box-banner-badge">PROMO 🔥</span>
+    </div>
+  </div>
+
   <div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
   <div id="menu-content"></div>
 </div>
@@ -994,8 +1183,8 @@
     <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:8px" id="order-status-label" class="order-status-label">Statut de la commande</p>
     <div class="status-tracker" id="status-tracker">
       <div class="status-step active" id="step-new">📋 Reçue</div>
-      <div class="status-step" id="step-prep">🔥 En préparation</div>
-      <div class="status-step" id="step-ready">✅ Prête</div>
+      <div class="status-step" id="step-prep">🔥 En cuisine</div>
+      <div class="status-step" id="step-ready">🍽️ Servie à table</div>
     </div>
   </div>
 
@@ -1007,7 +1196,7 @@
     </button>
     <button class="new-order-btn" id="new-order-btn" onclick="resetToMenu()">
       <span>🔄</span>
-      <span id="txt-new-order">Nouvelle commande</span>
+      <span id="txt-new-order">Commander d'autres articles</span>
     </button>
   </div>
 </div>
@@ -1018,7 +1207,7 @@
     <div class="cart-info">
       <div class="cart-count" id="cart-count">0</div>
       <div>
-        <div style="font-size:0.8rem;color:var(--text-dim)" id="cart-bar-label">Panier</div>
+        <div style="font-size:0.8rem;color:var(--text-dim)" id="cart-bar-label">Panier Table</div>
         <div class="cart-total" id="cart-total-bar">0.00 DZD</div>
       </div>
     </div>
@@ -1026,7 +1215,129 @@
   </div>
 </div>
 
-<!-- Cart / Checkout Modal -->
+<!-- Item Details & Size Selection Modal -->
+<div class="modal-backdrop" id="item-modal" onclick="closeItemModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="item-modal-title">Détails de l'article</span>
+      <button class="modal-close" onclick="closeItemModal()">✕</button>
+    </div>
+    
+    <div id="item-modal-img-wrap" style="width:100%;aspect-ratio:16/9;background:var(--surface2);display:none;position:relative;overflow:hidden;">
+      <img id="item-modal-img" src="" style="width:100%;height:100%;object-fit:cover;" alt="" />
+    </div>
+
+    <div style="padding:14px 20px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <h3 id="item-modal-name" style="font-size:1.2rem;font-weight:800;color:#fff;"></h3>
+        <span id="item-modal-price" style="font-size:1.15rem;font-weight:900;color:var(--primary-light);"></span>
+      </div>
+      <p id="item-modal-desc" style="color:var(--text-dim);font-size:0.88rem;margin-top:6px;line-height:1.45;"></p>
+    </div>
+
+    <!-- Fixed Ingredients Card (if any) -->
+    <div class="ing-card" id="item-modal-ing-card" style="display:none;">
+      <span class="ing-card-icon">ℹ️</span>
+      <div>
+        <div class="ing-card-title" id="lbl-modal-ing">Ingrédients :</div>
+        <div class="ing-card-text" id="item-modal-ing-text"></div>
+      </div>
+    </div>
+
+    <!-- Sizes Selection Section (if item has sizes) -->
+    <div class="choice-group" id="item-modal-sizes-group" style="display:none;">
+      <div class="choice-group-title">
+        <span id="lbl-modal-sizes">📏 Choisir la Taille</span>
+      </div>
+      <div class="chips-wrap" id="item-modal-sizes-chips"></div>
+    </div>
+
+    <!-- Special notes for this item -->
+    <div class="form-group" style="margin-top:6px;">
+      <label class="form-label" for="item-modal-notes" id="lbl-modal-item-notes">Instructions spéciales (Optionnel)</label>
+      <input class="form-input" id="item-modal-notes" type="text" placeholder="Ex: Sans oignon, bien cuit..." />
+    </div>
+
+    <!-- Quantity & Add to Cart Action Row -->
+    <div class="modal-action-row">
+      <div class="modal-qty-box">
+        <button type="button" class="modal-qty-btn" onclick="adjustItemModalQty(-1)">−</button>
+        <span class="modal-qty-val" id="item-modal-qty">1</span>
+        <button type="button" class="modal-qty-btn" onclick="adjustItemModalQty(1)">+</button>
+      </div>
+      <button type="button" class="modal-submit-btn" id="item-modal-add-btn" onclick="confirmAddItemToCart()">
+        <span id="item-modal-add-btn-txt">Ajouter au panier</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Box Customizer Modal -->
+<div class="modal-backdrop" id="box-modal" onclick="closeBoxModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="box-modal-title">🎁 Personnaliser le Box</span>
+      <button class="modal-close" onclick="closeBoxModal()">✕</button>
+    </div>
+
+    <div style="padding:14px 20px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <h3 id="box-modal-name" style="font-size:1.2rem;font-weight:800;color:#fff;"></h3>
+        <span id="box-modal-price" style="font-size:1.15rem;font-weight:900;color:#2dd4bf;"></span>
+      </div>
+      <p id="box-modal-desc" style="color:var(--text-dim);font-size:0.88rem;margin-top:6px;line-height:1.45;"></p>
+    </div>
+
+    <!-- Sandwiches Choices -->
+    <div class="choice-group" id="box-sandwiches-group">
+      <div class="choice-group-title">
+        <span id="lbl-box-sandwiches">🥪 Choix des Plats / Sandwiches</span>
+        <span class="choice-group-counter" id="box-sandwiches-counter">0 / 0</span>
+      </div>
+      <div class="chips-wrap" id="box-sandwiches-chips"></div>
+    </div>
+
+    <!-- Drinks Choices -->
+    <div class="choice-group" id="box-drinks-group">
+      <div class="choice-group-title">
+        <span id="lbl-box-drinks">🥤 Choix des Boissons</span>
+        <span class="choice-group-counter" id="box-drinks-counter">0 / 0</span>
+      </div>
+      <div class="chips-wrap" id="box-drinks-chips"></div>
+    </div>
+
+    <!-- Sauces Choices -->
+    <div class="choice-group" id="box-sauces-group">
+      <div class="choice-group-title">
+        <span id="lbl-box-sauces">🥫 Choix des Sauces</span>
+        <span class="choice-group-counter" id="box-sauces-counter">0 / 0</span>
+      </div>
+      <div class="chips-wrap" id="box-sauces-chips"></div>
+    </div>
+
+    <!-- Special notes for box -->
+    <div class="form-group">
+      <label class="form-label" for="box-modal-notes" id="lbl-box-notes">Instructions spéciales (Optionnel)</label>
+      <input class="form-input" id="box-modal-notes" type="text" placeholder="Ex: Sans piquant, sauce à part..." />
+    </div>
+
+    <!-- Quantity & Add to Cart Action Row -->
+    <div class="modal-action-row">
+      <div class="modal-qty-box">
+        <button type="button" class="modal-qty-btn" onclick="adjustBoxModalQty(-1)">−</button>
+        <span class="modal-qty-val" id="box-modal-qty">1</span>
+        <button type="button" class="modal-qty-btn" onclick="adjustBoxModalQty(1)">+</button>
+      </div>
+      <button type="button" class="modal-submit-btn" id="box-modal-add-btn" style="background:linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);" onclick="confirmAddBoxToCart()">
+        <span id="box-modal-add-btn-txt">Ajouter le Box</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Cart / Checkout Modal (Table Only) -->
 <div class="modal-backdrop" id="cart-modal" onclick="closeCartModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -1036,85 +1347,37 @@
     </div>
     <div class="cart-list" id="cart-list"></div>
 
-    <!-- Order Type Selector -->
-    <div class="form-group" style="padding-bottom: 2px;">
-      <label class="form-label" id="label-order-type">Type de commande</label>
-      <div class="order-type-selector">
-        <button type="button" class="order-type-btn" id="btn-type-takeaway" onclick="setOrderType('takeaway')">
-          <span id="txt-takeaway">🥡 À emporter</span>
-        </button>
-        <button type="button" class="order-type-btn active" id="btn-type-dinein" onclick="setOrderType('dine_in')">
-          <span id="txt-dinein">🍽️ Sur place</span>
-        </button>
-        <button type="button" class="order-type-btn" id="btn-type-delivery" onclick="setOrderType('delivery')">
-          <span id="txt-delivery">🛵 Livraison</span>
-        </button>
-      </div>
-    </div>
-    <div id="order-type-info" class="order-type-banner">
-      <span id="order-type-info-text">🍽️ <strong>Sur place</strong> : Vos plats seront servis directement à votre table.</span>
+    <!-- Table Input Group (Mandatory for Table Ordering) -->
+    <div class="form-group" style="padding-top:12px;">
+      <label class="form-label" for="table-input-field" id="label-table-num">
+        <span>🍽️ Numéro de votre Table (Requis)</span>
+        <span style="font-size:0.78rem;color:var(--primary-light);font-weight:normal" id="table-hint-tag">Sur place</span>
+      </label>
+      <input class="form-input table-field-highlight" id="table-input-field" type="text" placeholder="N° de table (ex: 1, 2, 5...)" />
     </div>
 
-    <!-- Table Input Group (Dine-in) -->
-    <div class="form-group" id="table-input-group">
-      <label class="form-label" for="table-input-field" id="label-table-num">Numéro de table</label>
-      <input class="form-input" id="table-input-field" type="text" placeholder="N° de table (ex: 1)" />
-    </div>
-
-    <!-- Delivery Input Group (Delivery) -->
-    <div id="delivery-input-group" style="display: none;">
-      <div class="form-group">
-        <label class="form-label" for="delivery-zone-select">
-          <span id="label-delivery-zone">📍 Choisir la zone de livraison</span>
-          <span style="color:#34d399;font-size:0.85rem;font-weight:bold" id="selected-zone-fee-tag"></span>
-        </label>
-        <select class="form-input" id="delivery-zone-select" onchange="onDeliveryZoneChanged()">
-          <option value="" id="opt-choose-zone">-- Cliquez pour choisir votre zone --</option>
-        </select>
-        <div id="delivery-zone-hint" style="font-size:0.82rem;color:var(--text-dim);margin-top:6px;display:none;"></div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="delivery-phone" id="label-phone">📱 N° de téléphone (Requis)</label>
-        <input class="form-input" id="delivery-phone" type="tel" dir="ltr" placeholder="05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="delivery-address" id="label-address">🏠 Adresse détaillée de livraison (Requise)</label>
-        <textarea class="form-input" id="delivery-address" rows="2" placeholder="Quartier, rue, n° de bâtiment/étage, repère..."></textarea>
-      </div>
-    </div>
-
-    <!-- Customer Name -->
-    <div class="form-group" id="common-customer-name-group">
+    <!-- Customer Name (Optional) -->
+    <div class="form-group">
       <label class="form-label" for="customer-name" id="label-cust-name">Nom du client (Optionnel)</label>
       <input class="form-input" id="customer-name" type="text" placeholder="Ex: Karim, Amine..." />
     </div>
 
     <!-- Order Notes -->
     <div class="form-group">
-      <label class="form-label" for="order-notes" id="label-notes">Instructions spéciales (Optionnel)</label>
+      <label class="form-label" for="order-notes" id="label-notes">Instructions pour la cuisine (Optionnel)</label>
       <input class="form-input" id="order-notes" type="text" placeholder="Sans oignons, sauce à part, etc..." />
     </div>
 
     <!-- Price Summary Box -->
-    <div class="cart-summary-box" id="cart-summary-box">
-      <div class="summary-line" id="summary-subtotal-line" style="display:none;">
-        <span id="lbl-subtotal">Sous-total :</span>
-        <span id="summary-subtotal-val">0.00 DZD</span>
-      </div>
-      <div class="summary-line" id="summary-delivery-line" style="display:none;color:#34d399;font-weight:bold;">
-        <span id="lbl-delivery-fee">🛵 Frais de livraison :</span>
-        <span id="summary-delivery-val">+0.00 DZD</span>
-      </div>
-      <div class="cart-total-row" style="padding:4px 0 0;margin:0;border:none;">
-        <span id="lbl-grand-total">TOTAL TTC</span>
+    <div class="cart-summary-box">
+      <div class="cart-total-row">
+        <span id="lbl-grand-total">TOTAL</span>
         <span id="cart-total-modal" style="color:var(--primary-light)">0.00 DZD</span>
       </div>
     </div>
 
     <button class="place-order-btn" id="place-order-btn" onclick="placeOrder()">
-      🚀 Confirmer la commande
+      🚀 Envoyer la commande à la cuisine
     </button>
   </div>
 </div>
@@ -1157,7 +1420,6 @@ function triggerPWAInstall() {
       deferredPrompt = null;
     });
   } else {
-    // iOS Safari guide
     alert(currentLang === 'fr' 
       ? "Pour installer sur iPhone : appuyez sur le bouton Partager ⎋ puis 'Sur l'écran d'accueil' ➕"
       : "للتثبيت على الآيفون: اضغط زر المشاركة ⎋ في المتصفح ثم اختر 'إضافة إلى الشاشة الرئيسية' ➕");
@@ -1173,132 +1435,116 @@ function closePWABanner() {
 // ── Multilingual Dictionary (French & Arabic) ──
 const DICT = {
   fr: {
-    title: 'Commandez en Ligne',
-    loading: 'Chargement du menu...',
+    title: 'Commande à Table',
+    loading: 'Chargement du menu et des offres...',
     errorTitle: 'Impossible de charger le menu',
-    errorMsg: 'Veuillez scanner le QR code de table ou l\'affiche murale pour accéder au menu.',
-    guideTitle: '💡 Comment accéder au menu :',
-    guideBody: 'Scannez le QR code imprimé avec l\'appareil photo de votre smartphone pour afficher le menu et identifier votre table.',
+    errorMsg: 'Veuillez scanner le QR code situé sur votre table pour accéder à la commande.',
+    guideTitle: '💡 Comment commander à table :',
+    guideBody: 'Scannez le QR code imprimé sur votre table avec votre smartphone pour afficher le menu et commander directement.',
     retry: 'Réessayer',
     allTab: '🍽️ Tous',
+    boxesTab: '🎁 Box & Combos',
     otherCat: 'Autres',
     noItemsCat: 'Aucun article dans cette catégorie.',
-    tableBadgeWall: '🛍️ Commande en ligne (À emporter / Livraison / Sur place)',
-    tableBadgeTable: 'Table {t}',
+    tableBadge: '🍽️ Table N° {t}',
+    tableBadgeGeneric: '🍽️ Commande à Table',
     cart: 'Panier',
     viewCart: 'Voir le panier →',
     cartTitle: '🛒 Panier de commande',
     emptyCart: 'Votre panier est vide',
-    orderType: 'Type de commande',
-    takeaway: '🥡 À emporter',
-    dinein: '🍽️ Sur place',
-    delivery: '🛵 Livraison',
-    takeawayInfo: '<span>🥡 <strong>À emporter / Retrait</strong> : Votre commande sera préparée à emporter et vous serez appelé par votre numéro au comptoir.</span>',
-    dineinInfo: '<span>🍽️ <strong>Sur place</strong> : Vos plats seront servis directement à votre table.</span>',
-    deliveryInfo: '<span>🛵 <strong>Livraison à domicile</strong> : Choisissez votre zone et notre livreur vous apportera votre commande.</span>',
-    tableNumLabel: 'Numéro de table',
-    tableNumPlaceholder: 'N° de table (ex: 1)',
-    deliveryZoneLabel: '📍 Choisir la zone de livraison',
-    deliveryZoneSelect: '-- Cliquez pour choisir votre zone --',
-    deliveryGeneral: 'Zone générale (Livraison standard)',
-    estimatedTime: '⏱️ Temps de livraison estimé : {t}',
-    phoneLabel: '📱 N° de téléphone (Requis)',
-    phonePlaceholder: '05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx',
-    addressLabel: '🏠 Adresse détaillée de livraison (Requise)',
-    addressPlaceholder: 'Quartier, rue, n° de bâtiment/étage, repère...',
+    tableNumLabel: '🍽️ Numéro de votre Table (Requis)',
+    tableNumPlaceholder: 'N° de table (ex: 1, 2, 5...)',
     nameLabel: 'Nom du client (Optionnel)',
     namePlaceholder: 'Ex: Karim, Amine...',
-    notesLabel: 'Instructions spéciales (Optionnel)',
+    notesLabel: 'Instructions pour la cuisine (Optionnel)',
     notesPlaceholder: 'Sans oignons, sauce à part, etc...',
-    subtotal: 'Sous-total :',
-    deliveryFee: '🛵 Frais de livraison :',
-    grandTotal: 'TOTAL TTC',
-    placeOrder: '🚀 Confirmer la commande',
+    grandTotal: 'TOTAL',
+    placeOrder: '🚀 Envoyer la commande à la cuisine',
     placingOrder: '⏳ Envoi en cours...',
-    successTitle: 'Commande transmise avec succès !',
+    successTitle: 'Commande transmise à la cuisine !',
     orderNumLabel: 'Votre numéro de commande',
     orderStatusLabel: 'Statut de la commande',
     stepNew: '📋 Reçue',
-    stepPrep: '🔥 En préparation',
-    stepReady: '✅ Prête pour retrait',
+    stepPrep: '🔥 En cuisine',
+    stepReady: '🍽️ Servie à table',
     downloadPdf: 'Télécharger le Reçu (PDF)',
-    newOrder: 'Nouvelle commande 🔄',
+    newOrder: 'Commander d'autres articles 🔄',
     orderDetails: '🧾 Détails de la commande',
-    zoneWarn: '⚠️ Veuillez sélectionner une zone de livraison dans la liste.',
-    phoneWarn: '⚠️ Veuillez saisir votre numéro de téléphone pour le livreur.',
-    addressWarn: '⚠️ Veuillez indiquer votre adresse complète (quartier, rue, bâtiment...).',
     tableWarn: '⚠️ Veuillez indiquer le numéro de votre table.',
-    pwaTitle: 'Installer l\'application Faster Food',
-    pwaSub: 'Accédez à vos commandes en un clic depuis votre écran',
+    pwaTitle: 'Installer l'application Faster Food',
+    pwaSub: 'Accédez au menu de votre table en un clic',
     pwaBtn: 'Installer 📲',
     currency: 'DZD',
-    custDelivery: 'Client Livraison',
-    custTakeaway: 'Client À emporter',
-    custDinein: 'Client Table'
+    custDinein: 'Client Table',
+    boxBannerTitle: 'Offres Spéciales Box & Combos',
+    boxBannerSub: 'Personnalisez votre formule complète avec boissons et sauces',
+    itemDetailsTitle: 'Détails de l'article',
+    ingTitle: 'Ingrédients :',
+    sizesTitle: '📏 Choisir la Taille',
+    standardSize: 'Standard',
+    itemNotesTitle: 'Instructions spéciales (Optionnel)',
+    boxCustomizerTitle: '🎁 Personnaliser le Box',
+    boxSandwichesTitle: '🥪 Choix des Plats / Sandwiches',
+    boxDrinksTitle: '🥤 Choix des Boissons',
+    boxSaucesTitle: '🥫 Choix des Sauces',
+    addToCart: 'Ajouter au panier',
+    addBoxToCart: 'Ajouter le Box'
   },
   ar: {
-    title: 'اطلب وجبتك أونلاين',
-    loading: 'جارٍ تحميل القائمة...',
+    title: 'طلب من الطاولة',
+    loading: 'جارٍ تحميل القائمة والعروض...',
     errorTitle: 'تعذّر تحميل القائمة',
-    errorMsg: 'يرجى مسح رمز QR من ملصق الطاولة أو الحائط للدخول للقائمة.',
-    guideTitle: '💡 كيفية فتح القائمة:',
-    guideBody: 'امسح رمز QR المطبوع من برنامج المطعم عبر كاميرا هاتفك لتفتح القائمة مباشرة وتتعرف على طاولتك تلقائياً.',
+    errorMsg: 'يرجى مسح رمز QR الموجود على طاولتك لطلب الوجبات مباشرة.',
+    guideTitle: '💡 كيفية الطلب من الطاولة:',
+    guideBody: 'امسح رمز QR المطبوع على طاولتك عبر كاميرا هاتفك لتفتح القائمة مباشرة وتتعرف على طاولتك تلقائياً.',
     retry: 'إعادة المحاولة',
     allTab: '🍽️ الكل',
+    boxesTab: '🎁 العروض والبوكسات',
     otherCat: 'أخرى',
     noItemsCat: 'لا توجد عناصر في هذه الفئة.',
-    tableBadgeWall: '🛍️ طلب أونلاين (سفري / توصيل / محلي)',
-    tableBadgeTable: 'طاولة {t}',
+    tableBadge: '🍽️ طاولة رقم {t}',
+    tableBadgeGeneric: '🍽️ طلب من الطاولة',
     cart: 'السلة',
     viewCart: 'عرض السلة ←',
     cartTitle: '🛒 سلة الطلبات',
     emptyCart: 'السلة فارغة',
-    orderType: 'نوع الطلب',
-    takeaway: '🥡 سفري',
-    dinein: '🍽️ محلي',
-    delivery: '🛵 توصيل',
-    takeawayInfo: '<span>🥡 <strong>طلب سفري / استلام</strong>: سيتم تجهيز طلبك في أكياس سفري ومناداتك برقم الطلب عند الكاونتر.</span>',
-    dineinInfo: '<span>🍽️ <strong>داخل المطعم</strong>: سيتم تقديم الوجبات مباشرة إلى طاولتك.</span>',
-    deliveryInfo: '<span>🛵 <strong>طلب توصيل منازل</strong>: اختر منطقتك وسيقوم مندوب التوصيل بإيصال طلبك إلى عنوانك.</span>',
-    tableNumLabel: 'رقم الطاولة',
-    tableNumPlaceholder: 'رقم الطاولة (مثال: 1)',
-    deliveryZoneLabel: '📍 اختر منطقة التوصيل (Zone)',
-    deliveryZoneSelect: '-- اضغط لاختيار منطقتك --',
-    deliveryGeneral: 'منطقة عامة (توصيل عادي)',
-    estimatedTime: '⏱️ وقت التوصيل المتوقع: {t}',
-    phoneLabel: '📱 رقم الهاتف للتواصل (مطلوب)',
-    phonePlaceholder: '05xxxxxxxx / 06xxxxxxxx / 07xxxxxxxx',
-    addressLabel: '🏠 عنوان التوصيل بالتفصيل (مطلوب)',
-    addressPlaceholder: 'اسم الحي، الشارع، رقم العمارة أو الطابق، معلم مميز...',
+    tableNumLabel: '🍽️ رقم طاولتك (مطلوب)',
+    tableNumPlaceholder: 'رقم الطاولة (مثال: 1، 2، 5...)',
     nameLabel: 'الاسم (اختياري)',
     namePlaceholder: 'محمد أحمد',
-    notesLabel: 'ملاحظات الطلب (اختياري)',
+    notesLabel: 'ملاحظات للمطبخ (اختياري)',
     notesPlaceholder: 'بدون بصل، صلصة إضافية، إلخ...',
-    subtotal: 'مجموع الأصناف:',
-    deliveryFee: '🛵 رسوم التوصيل:',
-    grandTotal: 'الإجمالي النهائي',
-    placeOrder: '🚀 أرسل طلبك الآن',
+    grandTotal: 'الإجمالي',
+    placeOrder: '🚀 إرسال الطلب للمطبخ الآن',
     placingOrder: '⏳ جارٍ إرسال الطلب...',
-    successTitle: 'تم إرسال طلبك بنجاح!',
+    successTitle: 'تم إرسال طلبك للمطبخ بنجاح!',
     orderNumLabel: 'رقم طلبك',
     orderStatusLabel: 'حالة الطلب',
-    stepNew: '📋 جديد',
-    stepPrep: '🔥 قيد التحضير',
-    stepReady: '✅ جاهز',
+    stepNew: '📋 تم الاستلام',
+    stepPrep: '🔥 قيد الطهي في المطبخ',
+    stepReady: '🍽️ يتم تقديمها لطاولتك',
     downloadPdf: 'تحميل الوصل (PDF)',
-    newOrder: 'طلب جديد 🔄',
+    newOrder: 'طلب وجبات إضافية 🔄',
     orderDetails: '🧾 تفاصيل الطلب',
-    zoneWarn: '⚠️ يرجى اختيار منطقة التوصيل من القائمة للمتابعة.',
-    phoneWarn: '⚠️ يرجى إدخال رقم هاتفك ليتواصل معك مندوب التوصيل.',
-    addressWarn: '⚠️ يرجى إدخال عنوان التوصيل بالتفصيل (الحي، الشارع، رقم العمارة...).',
-    tableWarn: '⚠️ يرجى كتابة رقم طاولتك للمتابعة.',
+    tableWarn: '⚠️ يرجى كتابة رقم طاولتك لمتابعة الطلب.',
     pwaTitle: 'تثبيت تطبيق Faster Food على هاتفك',
-    pwaSub: 'اطلب وجباتك بسرعة بلمسة واحدة من شاشة هاتفك الرئيسية',
+    pwaSub: 'اطلب من طاولتك بسرعة بلمسة واحدة من شاشتك',
     pwaBtn: 'تثبيت التطبيق 📲',
     currency: 'د.ج',
-    custDelivery: 'زبون توصيل',
-    custTakeaway: 'زبون سفري',
-    custDinein: 'عميل طاولة'
+    custDinein: 'عميل طاولة',
+    boxBannerTitle: 'عروض البوكسات والكومبو الخاصة',
+    boxBannerSub: 'خصص وجبتك المتكاملة مع اختيار المشروبات والصلصات',
+    itemDetailsTitle: 'تفاصيل الوجبة والحجم',
+    ingTitle: 'المكونات :',
+    sizesTitle: '📏 اختر الحجم',
+    standardSize: 'عادي (Standard)',
+    itemNotesTitle: 'ملاحظات خاصة (اختياري)',
+    boxCustomizerTitle: '🎁 تخصيص محتويات البوكس',
+    boxSandwichesTitle: '🥪 اختيار السندويتشات / الأطباق',
+    boxDrinksTitle: '🥤 اختيار المشروبات',
+    boxSaucesTitle: '🥫 اختيار الصلصات',
+    addToCart: 'إضافة إلى السلة',
+    addBoxToCart: 'إضافة البوكس للسلة'
   }
 };
 
@@ -1321,21 +1567,20 @@ const FOOD_TRANSLATIONS = {
   'باستا': 'Pâtes',
   'مشويات': 'Grillades',
   'آيس كريم': 'Glaces / Ice Cream',
-  'طاولة': 'Table'
+  'عروض': 'Offres & Box',
+  'بوكس': 'Box Combos'
 };
 
-// ── Default Language is ALWAYS French (fr) ──
 function getInitialLanguage() {
   const urlLang = new URLSearchParams(location.search).get('lang');
   if (urlLang === 'fr' || urlLang === 'ar') return urlLang;
   const saved = localStorage.getItem('web_lang');
   if (saved === 'fr' || saved === 'ar') return saved;
-  return 'fr'; // Always default to French
+  return 'fr';
 }
 
 let currentLang = getInitialLanguage();
 
-// ── Language Switcher with Instant Reactive Reload ──
 function setLanguage(lang) {
   localStorage.setItem('web_lang', lang);
   const u = new URL(location.href);
@@ -1354,51 +1599,61 @@ function translateName(name) {
   return name;
 }
 
-// ── Clean Parameter & Mode Detection ──
+function formatPrice(num) {
+  const n = Number(num) || 0;
+  return `${n.toFixed(0)} ${t('currency')}`;
+}
+
+// ── Table Detection from URL / Storage ──
 const params = new URLSearchParams(location.search);
-const rawTableParam = params.get('table');
-const hasTableParam = rawTableParam !== null && rawTableParam.trim().length > 0;
-const isWallMode = params.get('mode') === 'wall' || !hasTableParam;
-
+const rawTableParam = params.get('table') || params.get('t') || params.get('tbl') || '';
 let TABLE_NAME = '';
-let TABLE_ID = '';
+let TABLE_ID = decodeURIComponent(params.get('tid') || '');
 
-if (!isWallMode && hasTableParam) {
+if (rawTableParam.trim().length > 0) {
   let cleanT = decodeURIComponent(rawTableParam).trim();
   cleanT = cleanT.replace(/^طاولة\s*/i, '').replace(/^table\s*/i, '').trim();
   TABLE_NAME = cleanT || '1';
-  TABLE_ID = decodeURIComponent(params.get('tid') || '');
   localStorage.setItem('last_table', TABLE_NAME);
   if (TABLE_ID) localStorage.setItem('last_tid', TABLE_ID);
 } else {
-  // Clear any old table persistence so Wall QR never mistakenly remembers old tables!
-  localStorage.removeItem('last_table');
-  localStorage.removeItem('last_tid');
+  TABLE_NAME = localStorage.getItem('last_table') || '';
+  TABLE_ID = localStorage.getItem('last_tid') || '';
 }
 
-let rawProjectId  = params.get('r') || localStorage.getItem('sb_project_id') || '';
-let rawKey        = params.get('k') || localStorage.getItem('sb_anon_key') || '';
+let rawProjectId = params.get('r') || localStorage.getItem('sb_project_id') || 'nryxuvyptgohukwqqxvy';
+let rawKey       = params.get('k') || localStorage.getItem('sb_anon_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yeXh1dnlwdGdvaHVrd3FxeHZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzNjI0OTQsImV4cCI6MjA2NDkzODQ5NH0.FhM91E8p2X7q6g0g0-q_yD1P4wU9Yy44uH9nI1dD9k8';
 
-let PROJECT_ID    = rawProjectId.replace(/[^\x00-\x7F]/g, '').trim();
-let SUPABASE_KEY  = rawKey.replace(/[^\x00-\x7F]/g, '').trim();
+let PROJECT_ID   = rawProjectId.replace(/[^\x00-\x7F]/g, '').trim();
+let SUPABASE_KEY = rawKey.replace(/[^\x00-\x7F]/g, '').trim();
 
 if (params.get('r')) localStorage.setItem('sb_project_id', PROJECT_ID);
 if (params.get('k')) localStorage.setItem('sb_anon_key', SUPABASE_KEY);
 
-let SUPABASE_URL  = PROJECT_ID ? (PROJECT_ID.startsWith('http') ? PROJECT_ID : `https://${PROJECT_ID}.supabase.co`) : '';
+let SUPABASE_URL = PROJECT_ID ? (PROJECT_ID.startsWith('http') ? PROJECT_ID : `https://${PROJECT_ID}.supabase.co`) : '';
 
 // ── State ──
 let categories = [];
 let menuItems  = [];
-let deliveryZones = [];
-let cart = [];       // [{item, qty}]
+let itemSizes  = [];
+let boxCombos  = [];
+let cart = [];       // [{type:'item'|'box', item, size, customPrice, choices, notes, qty}]
 let activeCatId = null;
 let currentOrderId = null;
-// Wall Mode defaults to 'takeaway' (🥡 À emporter); Table QR defaults to 'dine_in' (🍽️ Sur place)
-let currentOrderType = isWallMode ? 'takeaway' : 'dine_in';
 let restaurantNameLoaded = false;
 let currentRestaurantName = 'Restaurant';
-let lastSavedOrderPayload = null;
+
+// Active Item Modal State
+let currentActiveItem = null;
+let currentSelectedSize = null;
+let currentItemQty = 1;
+
+// Active Box Modal State
+let currentActiveBox = null;
+let currentBoxQty = 1;
+let selectedSandwiches = [];
+let selectedDrinks = [];
+let selectedSauces = [];
 
 function applyStaticTranslations() {
   const isFr = currentLang === 'fr';
@@ -1432,31 +1687,18 @@ function applyStaticTranslations() {
   document.getElementById('cart-bar-label').textContent = t('cart');
   document.getElementById('view-cart-btn').textContent = isFr ? 'Voir le panier →' : 'عرض السلة ←';
   document.getElementById('modal-cart-title').textContent = t('cartTitle');
-  document.getElementById('label-order-type').textContent = t('orderType');
-  document.getElementById('txt-takeaway').textContent = t('takeaway');
-  document.getElementById('txt-dinein').textContent = t('dinein');
-  document.getElementById('txt-delivery').textContent = t('delivery');
 
-  document.getElementById('label-table-num').textContent = t('tableNumLabel');
+  document.getElementById('label-table-num').innerHTML = `<span>${t('tableNumLabel')}</span><span style="font-size:0.78rem;color:var(--primary-light);font-weight:normal">${isFr ? 'Sur place' : 'داخل المطعم'}</span>`;
   document.getElementById('table-input-field').placeholder = t('tableNumPlaceholder');
-  if (!isWallMode && TABLE_NAME) {
+  if (TABLE_NAME) {
     document.getElementById('table-input-field').value = TABLE_NAME;
   }
-
-  document.getElementById('label-delivery-zone').textContent = t('deliveryZoneLabel');
-  document.getElementById('opt-choose-zone').textContent = t('deliveryZoneSelect');
-  document.getElementById('label-phone').textContent = t('phoneLabel');
-  document.getElementById('delivery-phone').placeholder = t('phonePlaceholder');
-  document.getElementById('label-address').textContent = t('addressLabel');
-  document.getElementById('delivery-address').placeholder = t('addressPlaceholder');
 
   document.getElementById('label-cust-name').textContent = t('nameLabel');
   document.getElementById('customer-name').placeholder = t('namePlaceholder');
   document.getElementById('label-notes').textContent = t('notesLabel');
   document.getElementById('order-notes').placeholder = t('notesPlaceholder');
 
-  document.getElementById('lbl-subtotal').textContent = t('subtotal');
-  document.getElementById('lbl-delivery-fee').textContent = t('deliveryFee');
   document.getElementById('lbl-grand-total').textContent = t('grandTotal');
   document.getElementById('place-order-btn').textContent = t('placeOrder');
 
@@ -1469,137 +1711,22 @@ function applyStaticTranslations() {
   document.getElementById('txt-download-pdf').textContent = t('downloadPdf');
   document.getElementById('txt-new-order').textContent = t('newOrder');
 
-  if (isWallMode) {
-    document.getElementById('table-badge').textContent = t('tableBadgeWall');
+  // Box Banner & Modal Texts
+  document.getElementById('box-banner-title').textContent = t('boxBannerTitle');
+  document.getElementById('box-banner-sub').textContent = t('boxBannerSub');
+  document.getElementById('lbl-modal-ing').textContent = t('ingTitle');
+  document.getElementById('lbl-modal-sizes').textContent = t('sizesTitle');
+  document.getElementById('lbl-modal-item-notes').textContent = t('itemNotesTitle');
+  document.getElementById('lbl-box-sandwiches').textContent = t('boxSandwichesTitle');
+  document.getElementById('lbl-box-drinks').textContent = t('boxDrinksTitle');
+  document.getElementById('lbl-box-sauces').textContent = t('boxSaucesTitle');
+  document.getElementById('lbl-box-notes').textContent = t('itemNotesTitle');
+
+  if (TABLE_NAME) {
+    document.getElementById('table-badge').textContent = t('tableBadge').replace('{t}', TABLE_NAME);
   } else {
-    document.getElementById('table-badge').textContent = t('tableBadgeTable').replace('{t}', TABLE_NAME);
+    document.getElementById('table-badge').textContent = t('tableBadgeGeneric');
   }
-
-  setOrderType(currentOrderType);
-}
-
-// ── Order Type State Handler ──
-function setOrderType(type) {
-  currentOrderType = type;
-  const btnTakeaway = document.getElementById('btn-type-takeaway');
-  const btnDinein = document.getElementById('btn-type-dinein');
-  const btnDelivery = document.getElementById('btn-type-delivery');
-  const tableGroup = document.getElementById('table-input-group');
-  const deliveryGroup = document.getElementById('delivery-input-group');
-  const infoBanner = document.getElementById('order-type-info');
-
-  if (btnTakeaway) btnTakeaway.className = 'order-type-btn' + (type === 'takeaway' ? ' active takeaway' : '');
-  if (btnDinein) btnDinein.className = 'order-type-btn' + (type === 'dine_in' ? ' active' : '');
-  if (btnDelivery) btnDelivery.className = 'order-type-btn' + (type === 'delivery' ? ' active delivery' : '');
-
-  if (type === 'takeaway') {
-    if (tableGroup) tableGroup.style.display = 'none';
-    if (deliveryGroup) deliveryGroup.style.display = 'none';
-    if (infoBanner) {
-      infoBanner.innerHTML = t('takeawayInfo');
-      infoBanner.style.borderColor = 'var(--takeaway)';
-      infoBanner.style.color = '#fbbf24';
-      infoBanner.style.background = 'rgba(217, 119, 6, 0.12)';
-    }
-  } else if (type === 'delivery') {
-    if (tableGroup) tableGroup.style.display = 'none';
-    if (deliveryGroup) deliveryGroup.style.display = 'block';
-    if (infoBanner) {
-      infoBanner.innerHTML = t('deliveryInfo');
-      infoBanner.style.borderColor = 'var(--delivery)';
-      infoBanner.style.color = '#34d399';
-      infoBanner.style.background = 'rgba(5, 150, 105, 0.12)';
-    }
-  } else {
-    // dine_in
-    if (tableGroup) tableGroup.style.display = 'block';
-    if (deliveryGroup) deliveryGroup.style.display = 'none';
-    if (infoBanner) {
-      infoBanner.innerHTML = t('dineinInfo');
-      infoBanner.style.borderColor = 'var(--primary)';
-      infoBanner.style.color = 'var(--primary-light)';
-      infoBanner.style.background = 'rgba(2, 132, 199, 0.12)';
-    }
-  }
-
-  updateCartModalTotals();
-}
-
-// ── Delivery Zones Handling ──
-function populateDeliveryZonesDropdown() {
-  const select = document.getElementById('delivery-zone-select');
-  if (!select) return;
-  select.innerHTML = `<option value="">${t('deliveryZoneSelect')}</option>`;
-
-  if (!deliveryZones.length) {
-    const opt = document.createElement('option');
-    opt.value = 'default';
-    opt.textContent = t('deliveryGeneral');
-    select.appendChild(opt);
-    return;
-  }
-
-  deliveryZones.forEach(zone => {
-    const fee = Number(zone.price || zone.fee || 0);
-    const opt = document.createElement('option');
-    opt.value = zone.id;
-    opt.textContent = `${translateName(zone.name)} — (+${formatPrice(fee)})${zone.estimated_time ? ' • ⏱️ ' + zone.estimated_time : ''}`;
-    select.appendChild(opt);
-  });
-}
-
-function onDeliveryZoneChanged() {
-  const select = document.getElementById('delivery-zone-select');
-  const hint = document.getElementById('delivery-zone-hint');
-  const feeTag = document.getElementById('selected-zone-fee-tag');
-  const zoneId = select ? select.value : '';
-  const zone = deliveryZones.find(z => z.id === zoneId);
-
-  if (zone) {
-    const fee = Number(zone.price || zone.fee || 0);
-    if (feeTag) feeTag.textContent = `(+${formatPrice(fee)})`;
-    if (hint) {
-      hint.style.display = 'block';
-      hint.textContent = t('estimatedTime').replace('{t}', zone.estimated_time || '20-35 min');
-    }
-  } else {
-    if (feeTag) feeTag.textContent = '';
-    if (hint) hint.style.display = 'none';
-  }
-
-  updateCartModalTotals();
-}
-
-function getDeliveryFee() {
-  if (currentOrderType !== 'delivery') return 0;
-  const select = document.getElementById('delivery-zone-select');
-  const zoneId = select ? select.value : '';
-  const zone = deliveryZones.find(z => z.id === zoneId);
-  return zone ? Number(zone.price || zone.fee || 0) : 0;
-}
-
-function updateCartModalTotals() {
-  const subtotal = cartTotal();
-  const deliveryFee = getDeliveryFee();
-  const grandTotal = subtotal + deliveryFee;
-
-  const subtotalLine = document.getElementById('summary-subtotal-line');
-  const subtotalVal = document.getElementById('summary-subtotal-val');
-  const deliveryLine = document.getElementById('summary-delivery-line');
-  const deliveryVal = document.getElementById('summary-delivery-val');
-  const totalModal = document.getElementById('cart-total-modal');
-
-  if (currentOrderType === 'delivery' && deliveryFee > 0) {
-    if (subtotalLine) subtotalLine.style.display = 'flex';
-    if (subtotalVal) subtotalVal.textContent = formatPrice(subtotal);
-    if (deliveryLine) deliveryLine.style.display = 'flex';
-    if (deliveryVal) deliveryVal.textContent = `+${formatPrice(deliveryFee)}`;
-  } else {
-    if (subtotalLine) subtotalLine.style.display = 'none';
-    if (deliveryLine) deliveryLine.style.display = 'none';
-  }
-
-  if (totalModal) totalModal.textContent = formatPrice(grandTotal);
 }
 
 // ── Supabase REST helpers ──
@@ -1621,6 +1748,7 @@ async function sbFetch(path, options = {}) {
   return res.json().catch(() => ({}));
 }
 
+// ── Load Menu & Data ──
 async function loadMenu() {
   try {
     showLoading(true);
@@ -1632,30 +1760,34 @@ async function loadMenu() {
     }
 
     // 1. Fetch Categories
-    const catRes = await sbFetch('categories?select=*&is_active=eq.true&order=sort_order.asc');
-    categories = Array.isArray(catRes) ? catRes : [];
+    try {
+      const catRes = await sbFetch('categories?select=*&is_active=eq.true&order=sort_order.asc');
+      categories = Array.isArray(catRes) ? catRes : [];
+    } catch (_) {}
 
     // 2. Fetch Menu Items
-    const itemRes = await sbFetch('menu_items?select=*&is_available=eq.true&order=created_at.desc');
-    menuItems = Array.isArray(itemRes) ? itemRes : [];
-
-    // 3. Fetch Delivery Zones
     try {
-      let dzRes = null;
-      try {
-        dzRes = await sbFetch('delivery_zones?select=*&order=sort_order.asc');
-      } catch (_) {
-        dzRes = await sbFetch('delivery_zones?select=*');
-      }
-      if (Array.isArray(dzRes)) {
-        deliveryZones = dzRes.filter(z => z.is_active !== false && z.is_active !== 0);
-        populateDeliveryZonesDropdown();
-      }
-    } catch (err) {
-      console.warn('Could not load delivery zones:', err);
+      const itemRes = await sbFetch('menu_items?select=*&is_available=eq.true&order=created_at.desc');
+      menuItems = Array.isArray(itemRes) ? itemRes : [];
+    } catch (_) {}
+
+    // 3. Fetch Item Sizes (if table exists)
+    try {
+      const sizeRes = await sbFetch('item_sizes?select=*');
+      itemSizes = Array.isArray(sizeRes) ? sizeRes : [];
+    } catch (_) {
+      itemSizes = [];
     }
 
-    // 4. Fetch Restaurant Info
+    // 4. Fetch Box Combos (if table exists)
+    try {
+      const boxRes = await sbFetch('box_combos?select=*&is_available=eq.true');
+      boxCombos = Array.isArray(boxRes) ? boxRes : [];
+    } catch (_) {
+      boxCombos = [];
+    }
+
+    // 5. Fetch Restaurant Info
     try {
       const infoRes = await sbFetch('restaurant_info?select=*&limit=1');
       if (Array.isArray(infoRes) && infoRes.length > 0) {
@@ -1676,15 +1808,64 @@ async function loadMenu() {
   }
 }
 
+function showLoading(show) {
+  document.getElementById('loading').style.display = show ? 'flex' : 'none';
+  if (show) {
+    document.getElementById('menu-view').style.display = 'none';
+    document.getElementById('error-screen').classList.remove('show');
+    document.getElementById('success-view').classList.remove('show');
+  }
+}
+
+function showError(msg) {
+  document.getElementById('error-screen').classList.add('show');
+  document.getElementById('error-msg').textContent = msg;
+}
+
 function showDirectAccessGuide() {
   document.getElementById('error-screen').classList.add('show');
   document.getElementById('direct-access-guide').style.display = 'block';
-  document.getElementById('table-badge').textContent = '⚠️ QR Code Requis / رمز QR مطلوب';
+}
+
+// ── Sizes Resolver (Dual-Layer Fallback) ──
+function resolveItemSizes(item) {
+  let sizes = itemSizes.filter(s => s.item_id === item.id);
+  if (!sizes.length && item.fixed_ingredients && item.fixed_ingredients.includes('[SIZES:')) {
+    const match = item.fixed_ingredients.match(/\[SIZES:(.*?)\]/);
+    if (match) {
+      const parts = match[1].split('|');
+      parts.forEach(p => {
+        const pair = p.split(':');
+        if (pair.length === 2) {
+          sizes.push({
+            id: `sz_${item.id}_${pair[0].trim()}`,
+            item_id: item.id,
+            name: pair[0].trim(),
+            price_modifier: parseFloat(pair[1].trim()) || 0
+          });
+        }
+      });
+    }
+  }
+  return sizes;
+}
+
+function cleanFixedIngredients(text) {
+  return (text || '').replace(/\[SIZES:.*?\]/g, '').trim();
 }
 
 // ── Render Menu ──
 function renderMenu() {
   document.getElementById('menu-view').style.display = 'block';
+  
+  // Show Box Combos Banner if any boxes exist
+  const banner = document.getElementById('boxes-banner-container');
+  if (boxCombos.length > 0) {
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
+
   const tabs = document.getElementById('tabs');
   tabs.innerHTML = '';
 
@@ -1693,6 +1874,14 @@ function renderMenu() {
   allBtn.textContent = t('allTab');
   allBtn.onclick = () => setCategory(null);
   tabs.appendChild(allBtn);
+
+  if (boxCombos.length > 0) {
+    const boxBtn = document.createElement('button');
+    boxBtn.className = 'tab-btn box-tab' + (activeCatId === '__boxes__' ? ' active' : '');
+    boxBtn.textContent = t('boxesTab');
+    boxBtn.onclick = () => setCategory('__boxes__');
+    tabs.appendChild(boxBtn);
+  }
 
   categories.forEach(cat => {
     const btn = document.createElement('button');
@@ -1710,16 +1899,43 @@ function setCategory(catId) {
   renderMenu();
 }
 
+function scrollToBoxes() {
+  setCategory('__boxes__');
+  window.scrollTo({ top: 80, behavior: 'smooth' });
+}
+
 function renderItems() {
   const content = document.getElementById('menu-content');
   content.innerHTML = '';
 
+  // 1. If Box Combos category selected
+  if (activeCatId === '__boxes__') {
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = t('boxesTab');
+    content.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'menu-grid';
+    boxCombos.forEach(box => {
+      grid.appendChild(buildBoxCard(box));
+    });
+    content.appendChild(grid);
+    return;
+  }
+
+  // 2. Regular Categories & Items
   const filtered = activeCatId
     ? menuItems.filter(i => i.category_id === activeCatId)
     : menuItems;
 
   const byCat = {};
   if (!activeCatId) {
+    // Also include Box Combos group at top of All tab if they exist
+    if (boxCombos.length > 0) {
+      byCat['__boxes__'] = { name: t('boxesTab'), isBoxes: true, items: boxCombos };
+    }
+
     categories.forEach(c => { byCat[c.id] = { name: translateName(c.name), items: [] }; });
     const uncatKey = '__uncat__';
     byCat[uncatKey] = { name: t('otherCat'), items: [] };
@@ -1742,38 +1958,45 @@ function renderItems() {
     const grid = document.createElement('div');
     grid.className = 'menu-grid';
     group.items.forEach(item => {
-      grid.appendChild(buildItemCard(item));
+      if (group.isBoxes) {
+        grid.appendChild(buildBoxCard(item));
+      } else {
+        grid.appendChild(buildItemCard(item));
+      }
     });
     content.appendChild(grid);
   });
 
-  if (!filtered.length) {
+  if (!filtered.length && activeCatId !== '__boxes__') {
     content.innerHTML = `<div class="loader"><p style="color:var(--text-dim)">${t('noItemsCat')}</p></div>`;
   }
 }
 
 // ── Item Card Builder ──
 function buildItemCard(item) {
-  const cartItem = cart.find(c => c.item.id === item.id);
-  const qty = cartItem ? cartItem.qty : 0;
+  const sizes = resolveItemSizes(item);
+  const hasSizes = sizes.length > 0;
 
-  const imageSrc = item.image_path || item.image_url || item.imageUrl || item.image || '';
+  const cartCountForItem = cart
+    .filter(c => c.type === 'item' && c.item.id === item.id)
+    .reduce((s, c) => s + c.qty, 0);
+
+  const imageSrc = item.image_path || item.image_url || '';
   const hasValidImage = imageSrc && (imageSrc.startsWith('http') || imageSrc.startsWith('data:image'));
 
   const card = document.createElement('div');
   card.className = 'item-card' + (item.is_available === false ? ' unavailable' : '');
-  card.onclick = () => {
-    addToCart({ stopPropagation: () => {} }, item.id);
-  };
+  card.onclick = () => openItemModal(item);
 
   const displayName = translateName(item.name);
   const displayDesc = item.description ? translateName(item.description) : '';
 
   card.innerHTML = `
-    ${qty > 0 ? `<div class="qty-badge">${qty}</div>` : ''}
+    ${cartCountForItem > 0 ? `<div class="qty-badge">${cartCountForItem}</div>` : ''}
+    ${hasSizes ? `<div class="size-tag-badge">📏 ${sizes.length + 1} Tailles</div>` : ''}
     <div class="item-img-wrap">
       ${hasValidImage
-        ? `<img src="${imageSrc}" class="item-img" alt="${displayName}" loading="lazy" onerror="this.outerHTML='<div class=\\'item-img-placeholder\\'>🍽️</div>'" />
+        ? `<img src="${imageSrc}" class="item-img" alt="${displayName}" loading="lazy" onerror="this.outerHTML='<div class=\'item-img-placeholder\'>🍽️</div>'" />
            <button type="button" class="img-zoom-btn" title="Zoom" onclick="openImgModal(event, '${imageSrc}', '${displayName.replace(/'/g, "\\'")}')">🔍</button>`
         : `<div class="item-img-placeholder">🍽️</div>`
       }
@@ -1785,11 +2008,468 @@ function buildItemCard(item) {
       </div>
       <div class="item-footer">
         <div class="item-price">${formatPrice(item.base_price)}</div>
-        <button type="button" class="add-btn" onclick="addToCart(event,'${item.id}')" title="Ajouter">+</button>
+        <button type="button" class="add-btn" onclick="openItemModalFromBtn(event, '${item.id}')" title="Ajouter">+</button>
       </div>
     </div>
   `;
   return card;
+}
+
+// ── Box Card Builder ──
+function buildBoxCard(box) {
+  const cartCountForBox = cart
+    .filter(c => c.type === 'box' && c.item.id === box.id)
+    .reduce((s, c) => s + c.qty, 0);
+
+  const imageSrc = box.image_path || box.image_url || '';
+  const hasValidImage = imageSrc && (imageSrc.startsWith('http') || imageSrc.startsWith('data:image'));
+
+  const card = document.createElement('div');
+  card.className = 'item-card is-box' + (box.is_available === false ? ' unavailable' : '');
+  card.onclick = () => openBoxModal(box);
+
+  const displayName = translateName(box.name);
+  const displayDesc = box.description ? translateName(box.description) : '';
+
+  card.innerHTML = `
+    ${cartCountForBox > 0 ? `<div class="qty-badge">${cartCountForBox}</div>` : ''}
+    <div class="size-tag-badge" style="background:#0d9488">🎁 BOX COMBO</div>
+    <div class="item-img-wrap">
+      ${hasValidImage
+        ? `<img src="${imageSrc}" class="item-img" alt="${displayName}" loading="lazy" onerror="this.outerHTML='<div class=\'item-img-placeholder\'>🎁</div>'" />
+           <button type="button" class="img-zoom-btn" title="Zoom" onclick="openImgModal(event, '${imageSrc}', '${displayName.replace(/'/g, "\\'")}')">🔍</button>`
+        : `<div class="item-img-placeholder" style="color:#2dd4bf">🎁</div>`
+      }
+    </div>
+    <div class="item-body">
+      <div>
+        <div class="item-name">${displayName}</div>
+        ${displayDesc ? `<div class="item-desc">${displayDesc}</div>` : ''}
+      </div>
+      <div class="item-footer">
+        <div class="item-price" style="color:#2dd4bf">${formatPrice(box.base_price)}</div>
+        <button type="button" class="add-btn" style="background:linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)" onclick="openBoxModalFromBtn(event, '${box.id}')" title="Personnaliser">⚙️</button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// ── Item Details & Sizes Modal Handlers ──
+function openItemModalFromBtn(e, itemId) {
+  if (e) e.stopPropagation();
+  const item = menuItems.find(i => i.id === itemId);
+  if (item) openItemModal(item);
+}
+
+function openItemModal(item) {
+  currentActiveItem = item;
+  currentSelectedSize = null;
+  currentItemQty = 1;
+
+  const displayName = translateName(item.name);
+  const displayDesc = item.description ? translateName(item.description) : '';
+  const cleanIng = cleanFixedIngredients(item.fixed_ingredients);
+  const sizes = resolveItemSizes(item);
+
+  document.getElementById('item-modal-title').textContent = t('itemDetailsTitle');
+  document.getElementById('item-modal-name').textContent = displayName;
+  document.getElementById('item-modal-desc').textContent = displayDesc;
+  document.getElementById('item-modal-desc').style.display = displayDesc ? 'block' : 'none';
+  document.getElementById('item-modal-notes').value = '';
+  document.getElementById('item-modal-qty').textContent = '1';
+
+  // Image handling
+  const imgWrap = document.getElementById('item-modal-img-wrap');
+  const imgEl = document.getElementById('item-modal-img');
+  const imageSrc = item.image_path || item.image_url || '';
+  if (imageSrc && (imageSrc.startsWith('http') || imageSrc.startsWith('data:image'))) {
+    imgEl.src = imageSrc;
+    imgWrap.style.display = 'block';
+  } else {
+    imgWrap.style.display = 'none';
+  }
+
+  // Fixed Ingredients Card
+  const ingCard = document.getElementById('item-modal-ing-card');
+  const ingText = document.getElementById('item-modal-ing-text');
+  if (cleanIng) {
+    ingText.textContent = cleanIng;
+    ingCard.style.display = 'flex';
+  } else {
+    ingCard.style.display = 'none';
+  }
+
+  // Sizes Chips
+  const sizesGroup = document.getElementById('item-modal-sizes-group');
+  const sizesChips = document.getElementById('item-modal-sizes-chips');
+  sizesChips.innerHTML = '';
+
+  if (sizes.length > 0) {
+    sizesGroup.style.display = 'block';
+
+    // 1. Standard Size Option
+    const stdChip = document.createElement('div');
+    stdChip.className = 'choice-chip selected';
+    stdChip.id = 'chip-size-std';
+    stdChip.innerHTML = `<span>✓</span><span>${t('standardSize')} (${formatPrice(item.base_price)})</span>`;
+    stdChip.onclick = () => selectItemSize(null);
+    sizesChips.appendChild(stdChip);
+
+    // 2. Custom Sizes
+    sizes.forEach((s, idx) => {
+      const fullPrice = item.base_price + (Number(s.price_modifier) || 0);
+      const chip = document.createElement('div');
+      chip.className = 'choice-chip';
+      chip.id = `chip-size-${idx}`;
+      chip.innerHTML = `<span>📏</span><span>${s.name} (${formatPrice(fullPrice)})</span>`;
+      chip.onclick = () => selectItemSize(s, idx);
+      sizesChips.appendChild(chip);
+    });
+  } else {
+    sizesGroup.style.display = 'none';
+  }
+
+  updateItemModalPrice();
+  document.getElementById('item-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectItemSize(size, chipIdx) {
+  currentSelectedSize = size;
+  const chips = document.querySelectorAll('#item-modal-sizes-chips .choice-chip');
+  chips.forEach(c => c.classList.remove('selected'));
+
+  if (size === null) {
+    const std = document.getElementById('chip-size-std');
+    if (std) std.classList.add('selected');
+  } else if (chipIdx !== undefined) {
+    const chip = document.getElementById(`chip-size-${chipIdx}`);
+    if (chip) chip.classList.add('selected');
+  }
+
+  updateItemModalPrice();
+}
+
+function adjustItemModalQty(delta) {
+  currentItemQty = Math.max(1, currentItemQty + delta);
+  document.getElementById('item-modal-qty').textContent = currentItemQty;
+  updateItemModalPrice();
+}
+
+function updateItemModalPrice() {
+  if (!currentActiveItem) return;
+  const unitPrice = currentActiveItem.base_price + (currentSelectedSize ? (Number(currentSelectedSize.price_modifier) || 0) : 0);
+  const total = unitPrice * currentItemQty;
+
+  document.getElementById('item-modal-price').textContent = formatPrice(unitPrice);
+  document.getElementById('item-modal-add-btn-txt').textContent = `${t('addToCart')} • ${formatPrice(total)}`;
+}
+
+function closeItemModal(e) {
+  if (e && e.target !== document.getElementById('item-modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('item-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function confirmAddItemToCart() {
+  if (!currentActiveItem) return;
+  const notes = document.getElementById('item-modal-notes').value.trim();
+  const unitPrice = currentActiveItem.base_price + (currentSelectedSize ? (Number(currentSelectedSize.price_modifier) || 0) : 0);
+
+  // Check if identical item already in cart
+  const existing = cart.find(c =>
+    c.type === 'item' &&
+    c.item.id === currentActiveItem.id &&
+    ((!c.size && !currentSelectedSize) || (c.size && currentSelectedSize && c.size.id === currentSelectedSize.id)) &&
+    c.notes === notes
+  );
+
+  if (existing) {
+    existing.qty += currentItemQty;
+  } else {
+    cart.push({
+      type: 'item',
+      item: currentActiveItem,
+      size: currentSelectedSize,
+      customPrice: unitPrice,
+      notes: notes,
+      qty: currentItemQty
+    });
+  }
+
+  closeItemModal();
+  updateCartUI();
+  renderItems();
+}
+
+// ── Box Customizer Modal Handlers ──
+function openBoxModalFromBtn(e, boxId) {
+  if (e) e.stopPropagation();
+  const box = boxCombos.find(b => b.id === boxId);
+  if (box) openBoxModal(box);
+}
+
+function parseChoicesList(raw) {
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed;
+  } catch (_) {}
+  return String(raw).split(',').map(s => s.trim()).filter(s => s.length > 0);
+}
+
+function openBoxModal(box) {
+  currentActiveBox = box;
+  currentBoxQty = 1;
+  selectedSandwiches = [];
+  selectedDrinks = [];
+  selectedSauces = [];
+
+  const displayName = translateName(box.name);
+  const displayDesc = box.description ? translateName(box.description) : '';
+
+  document.getElementById('box-modal-title').textContent = t('boxCustomizerTitle');
+  document.getElementById('box-modal-name').textContent = displayName;
+  document.getElementById('box-modal-desc').textContent = displayDesc;
+  document.getElementById('box-modal-desc').style.display = displayDesc ? 'block' : 'none';
+  document.getElementById('box-modal-notes').value = '';
+  document.getElementById('box-modal-qty').textContent = '1';
+
+  // Sandwiches Choices
+  const swChoices = parseChoicesList(box.sandwich_choices || box.sandwichChoices);
+  const swCount = Number(box.sandwich_count || box.sandwichCount || 0);
+  const swGroup = document.getElementById('box-sandwiches-group');
+  const swChips = document.getElementById('box-sandwiches-chips');
+  swChips.innerHTML = '';
+
+  if (swCount > 0 && swChoices.length > 0) {
+    swGroup.style.display = 'block';
+    swChoices.forEach(choice => {
+      const chip = document.createElement('div');
+      chip.className = 'choice-chip';
+      chip.textContent = choice;
+      chip.onclick = () => toggleBoxChoice('sandwich', choice, swCount, chip);
+      swChips.appendChild(chip);
+    });
+  } else {
+    swGroup.style.display = 'none';
+  }
+
+  // Drinks Choices
+  const drChoices = parseChoicesList(box.drink_choices || box.drinkChoices);
+  const drCount = Number(box.drink_count || box.drinkCount || 0);
+  const drGroup = document.getElementById('box-drinks-group');
+  const drChips = document.getElementById('box-drinks-chips');
+  drChips.innerHTML = '';
+
+  if (drCount > 0 && drChoices.length > 0) {
+    drGroup.style.display = 'block';
+    drChoices.forEach(choice => {
+      const chip = document.createElement('div');
+      chip.className = 'choice-chip';
+      chip.textContent = choice;
+      chip.onclick = () => toggleBoxChoice('drink', choice, drCount, chip);
+      drChips.appendChild(chip);
+    });
+  } else {
+    drGroup.style.display = 'none';
+  }
+
+  // Sauces Choices
+  const scChoices = parseChoicesList(box.sauce_choices || box.sauceChoices);
+  const scCount = Number(box.sauce_count || box.sauceCount || 0);
+  const scGroup = document.getElementById('box-sauces-group');
+  const scChips = document.getElementById('box-sauces-chips');
+  scChips.innerHTML = '';
+
+  if (scCount > 0 && scChoices.length > 0) {
+    scGroup.style.display = 'block';
+    scChoices.forEach(choice => {
+      const chip = document.createElement('div');
+      chip.className = 'choice-chip';
+      chip.textContent = choice;
+      chip.onclick = () => toggleBoxChoice('sauce', choice, scCount, chip);
+      scChips.appendChild(chip);
+    });
+  } else {
+    scGroup.style.display = 'none';
+  }
+
+  updateBoxCounters();
+  updateBoxModalPrice();
+  document.getElementById('box-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function toggleBoxChoice(type, value, maxAllowed, chipEl) {
+  let arr;
+  if (type === 'sandwich') arr = selectedSandwiches;
+  else if (type === 'drink') arr = selectedDrinks;
+  else arr = selectedSauces;
+
+  const idx = arr.indexOf(value);
+  if (idx !== -1) {
+    arr.splice(idx, 1);
+    chipEl.classList.remove('selected');
+  } else {
+    if (arr.length < maxAllowed) {
+      arr.push(value);
+      chipEl.classList.add('selected');
+    } else if (maxAllowed === 1) {
+      arr.length = 0;
+      arr.push(value);
+      chipEl.parentElement.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('selected'));
+      chipEl.classList.add('selected');
+    }
+  }
+
+  updateBoxCounters();
+}
+
+function updateBoxCounters() {
+  if (!currentActiveBox) return;
+  const swCount = Number(currentActiveBox.sandwich_count || currentActiveBox.sandwichCount || 0);
+  const drCount = Number(currentActiveBox.drink_count || currentActiveBox.drinkCount || 0);
+  const scCount = Number(currentActiveBox.sauce_count || currentActiveBox.sauceCount || 0);
+
+  document.getElementById('box-sandwiches-counter').textContent = `${selectedSandwiches.length} / ${swCount}`;
+  document.getElementById('box-drinks-counter').textContent = `${selectedDrinks.length} / ${drCount}`;
+  document.getElementById('box-sauces-counter').textContent = `${selectedSauces.length} / ${scCount}`;
+}
+
+function adjustBoxModalQty(delta) {
+  currentBoxQty = Math.max(1, currentBoxQty + delta);
+  document.getElementById('box-modal-qty').textContent = currentBoxQty;
+  updateBoxModalPrice();
+}
+
+function updateBoxModalPrice() {
+  if (!currentActiveBox) return;
+  const unitPrice = currentActiveBox.base_price || 0;
+  const total = unitPrice * currentBoxQty;
+
+  document.getElementById('box-modal-price').textContent = formatPrice(unitPrice);
+  document.getElementById('box-modal-add-btn-txt').textContent = `${t('addBoxToCart')} • ${formatPrice(total)}`;
+}
+
+function closeBoxModal(e) {
+  if (e && e.target !== document.getElementById('box-modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('box-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function confirmAddBoxToCart() {
+  if (!currentActiveBox) return;
+  const notes = document.getElementById('box-modal-notes').value.trim();
+
+  cart.push({
+    type: 'box',
+    item: currentActiveBox,
+    customPrice: currentActiveBox.base_price || 0,
+    choices: {
+      sandwiches: [...selectedSandwiches],
+      drinks: [...selectedDrinks],
+      sauces: [...selectedSauces]
+    },
+    notes: notes,
+    qty: currentBoxQty
+  });
+
+  closeBoxModal();
+  updateCartUI();
+  renderItems();
+}
+
+// ── Cart Operations ──
+function changeCartQty(index, delta) {
+  if (!cart[index]) return;
+  cart[index].qty += delta;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+  updateCartUI();
+  renderItems();
+  if (document.getElementById('cart-modal').classList.contains('open')) renderCartList();
+}
+
+function updateCartUI() {
+  const totalQty = cart.reduce((s, c) => s + c.qty, 0);
+  const grandTotal = cartTotal();
+
+  document.getElementById('cart-count').textContent = totalQty;
+  document.getElementById('cart-total-bar').textContent = formatPrice(grandTotal);
+  document.getElementById('cart-total-modal').textContent = formatPrice(grandTotal);
+
+  const bar = document.getElementById('cart-bar');
+  if (totalQty > 0) bar.classList.add('visible');
+  else bar.classList.remove('visible');
+}
+
+function cartTotal() {
+  return cart.reduce((s, c) => s + (c.customPrice || c.item.base_price) * c.qty, 0);
+}
+
+// ── Cart Modal ──
+function openCartModal() {
+  renderCartList();
+  document.getElementById('cart-total-modal').textContent = formatPrice(cartTotal());
+  document.getElementById('cart-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCartModal(e) {
+  if (e && e.target !== document.getElementById('cart-modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('cart-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCartList() {
+  const list = document.getElementById('cart-list');
+  list.innerHTML = '';
+  if (!cart.length) {
+    list.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-dim)">${t('emptyCart')}</div>`;
+    return;
+  }
+
+  cart.forEach((c, index) => {
+    const row = document.createElement('div');
+    row.className = 'cart-item';
+    const imgSrc = c.item.image_path || c.item.image_url || '';
+    const hasImg = imgSrc && (imgSrc.startsWith('http') || imgSrc.startsWith('data:image'));
+    const displayName = translateName(c.item.name);
+    const itemTotal = (c.customPrice || c.item.base_price) * c.qty;
+
+    let detailsHtml = '';
+    if (c.type === 'item' && c.size) {
+      detailsHtml += `<div class="cart-item-size-badge">📏 ${c.size.name}</div>`;
+    } else if (c.type === 'box' && c.choices) {
+      const parts = [];
+      if (c.choices.sandwiches && c.choices.sandwiches.length) parts.push(`🥪 ${c.choices.sandwiches.join(', ')}`);
+      if (c.choices.drinks && c.choices.drinks.length) parts.push(`🥤 ${c.choices.drinks.join(', ')}`);
+      if (c.choices.sauces && c.choices.sauces.length) parts.push(`🥫 ${c.choices.sauces.join(', ')}`);
+      if (parts.length) {
+        detailsHtml += `<div class="cart-item-choices">${parts.join('<br>')}</div>`;
+      }
+    }
+    if (c.notes) {
+      detailsHtml += `<div class="cart-item-choices" style="color:#fcd34d">📝 ${c.notes}</div>`;
+    }
+
+    row.innerHTML = `
+      ${hasImg ? `<img src="${imgSrc}" class="cart-item-img" alt="${displayName}" />` : ''}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${displayName}</div>
+        ${detailsHtml}
+        <div class="cart-item-price">${formatPrice(itemTotal)}</div>
+      </div>
+      <div class="qty-controls">
+        <button type="button" class="qty-btn" onclick="changeCartQty(${index}, -1)">−</button>
+        <span class="qty-num">${c.qty}</span>
+        <button type="button" class="qty-btn" onclick="changeCartQty(${index}, 1)">+</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
 }
 
 // ── Lightbox Image Modal ──
@@ -1808,162 +2488,23 @@ function closeImgModal(e) {
   document.getElementById('img-modal').classList.remove('open');
 }
 
-// ── Cart Operations ──
-function addToCart(e, itemId) {
-  if (e && e.stopPropagation) e.stopPropagation();
-  const item = menuItems.find(i => i.id === itemId);
-  if (!item) return;
-  const existing = cart.find(c => c.item.id === itemId);
-  if (existing) existing.qty++;
-  else cart.push({ item, qty: 1 });
-  updateCartUI();
-  renderItems();
-}
-
-function changeQty(itemId, delta) {
-  const idx = cart.findIndex(c => c.item.id === itemId);
-  if (idx === -1) return;
-  cart[idx].qty += delta;
-  if (cart[idx].qty <= 0) cart.splice(idx, 1);
-  updateCartUI();
-  renderItems();
-  if (document.getElementById('cart-modal').classList.contains('open')) renderCartList();
-}
-
-function updateCartUI() {
-  const totalQty = cart.reduce((s, c) => s + c.qty, 0);
-  const subtotal = cartTotal();
-  const deliveryFee = getDeliveryFee();
-  const grandTotal = subtotal + deliveryFee;
-
-  document.getElementById('cart-count').textContent = totalQty;
-  document.getElementById('cart-total-bar').textContent = formatPrice(grandTotal);
-  updateCartModalTotals();
-
-  const bar = document.getElementById('cart-bar');
-  if (totalQty > 0) bar.classList.add('visible');
-  else bar.classList.remove('visible');
-}
-
-function cartTotal() {
-  return cart.reduce((s, c) => s + c.item.base_price * c.qty, 0);
-}
-
-// ── Cart Modal ──
-function openCartModal() {
-  renderCartList();
-  updateCartModalTotals();
-  document.getElementById('cart-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeCartModal(e) {
-  if (e && e.target !== document.getElementById('cart-modal') && !e.target.classList.contains('modal-close')) return;
-  document.getElementById('cart-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderCartList() {
-  const list = document.getElementById('cart-list');
-  list.innerHTML = '';
-  if (!cart.length) {
-    list.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-dim)">${t('emptyCart')}</div>`;
-    return;
-  }
-  cart.forEach(c => {
-    const row = document.createElement('div');
-    row.className = 'cart-item';
-    const imgSrc = c.item.image_path || c.item.image_url || '';
-    const hasImg = imgSrc && (imgSrc.startsWith('http') || imgSrc.startsWith('data:image'));
-    const displayName = translateName(c.item.name);
-
-    row.innerHTML = `
-      ${hasImg ? `<img src="${imgSrc}" class="cart-item-img" alt="${displayName}" />` : ''}
-      <div class="cart-item-info">
-        <div class="cart-item-name">${displayName}</div>
-        <div class="cart-item-price">${formatPrice(c.item.base_price * c.qty)}</div>
-      </div>
-      <div class="qty-controls">
-        <button type="button" class="qty-btn" onclick="changeQty('${c.item.id}', -1)">−</button>
-        <span class="qty-num">${c.qty}</span>
-        <button type="button" class="qty-btn" onclick="changeQty('${c.item.id}', 1)">+</button>
-      </div>
-    `;
-    list.appendChild(row);
-  });
-}
-
-// ── Place Order ──
+// ── Place Table Order ──
 async function placeOrder() {
   if (!cart.length) return;
   const btn = document.getElementById('place-order-btn');
 
+  const tableField = document.getElementById('table-input-field');
+  const enteredTable = tableField ? tableField.value.trim() : '';
+  const finalTableNum = enteredTable || TABLE_NAME;
+
+  if (!finalTableNum) {
+    alert(t('tableWarn'));
+    if (tableField) tableField.focus();
+    return;
+  }
+
   const customerName = (document.getElementById('customer-name') ? document.getElementById('customer-name').value.trim() : '');
   const notes = (document.getElementById('order-notes') ? document.getElementById('order-notes').value.trim() : '');
-
-  let deliveryFee = 0;
-  let deliveryZoneName = '';
-  let deliveryPhone = '';
-  let deliveryAddress = '';
-
-  const isTakeaway = currentOrderType === 'takeaway';
-  const isDelivery = currentOrderType === 'delivery';
-  const isDineIn = currentOrderType === 'dine_in';
-
-  if (isDelivery) {
-    const zoneSelect = document.getElementById('delivery-zone-select');
-    const zoneId = zoneSelect ? zoneSelect.value : '';
-    const zone = deliveryZones.find(z => z.id === zoneId);
-
-    if (deliveryZones.length > 0 && !zone) {
-      alert(t('zoneWarn'));
-      if (zoneSelect) zoneSelect.focus();
-      return;
-    }
-
-    deliveryPhone = (document.getElementById('delivery-phone') ? document.getElementById('delivery-phone').value.trim() : '');
-    deliveryAddress = (document.getElementById('delivery-address') ? document.getElementById('delivery-address').value.trim() : '');
-
-    if (!deliveryPhone) {
-      alert(t('phoneWarn'));
-      const pField = document.getElementById('delivery-phone');
-      if (pField) pField.focus();
-      return;
-    }
-
-    if (!deliveryAddress) {
-      alert(t('addressWarn'));
-      const aField = document.getElementById('delivery-address');
-      if (aField) aField.focus();
-      return;
-    }
-
-    if (zone) {
-      deliveryFee = Number(zone.price || zone.fee || 0);
-      deliveryZoneName = zone.name;
-    }
-  }
-
-  let finalTableNum = '';
-  let finalTableId = null;
-
-  if (isDineIn) {
-    const tableField = document.getElementById('table-input-field');
-    const entered = tableField ? tableField.value.trim() : '';
-    finalTableNum = entered || TABLE_NAME;
-    if (isWallMode && !finalTableNum) {
-      alert(t('tableWarn'));
-      if (tableField) tableField.focus();
-      return;
-    }
-    finalTableId = TABLE_ID || null;
-  } else if (isTakeaway) {
-    finalTableNum = isWallMode ? 'À emporter' : 'À emporter';
-    finalTableId = null;
-  } else if (isDelivery) {
-    finalTableNum = deliveryZoneName ? `Livraison: ${deliveryZoneName}` : 'Livraison';
-    finalTableId = null;
-  }
 
   btn.disabled = true;
   btn.textContent = t('placingOrder');
@@ -1978,66 +2519,54 @@ async function placeOrder() {
       : `ord_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
 
     const now = new Date().toISOString();
-    const subtotal = cartTotal();
-    const grandTotal = subtotal + deliveryFee;
+    const grandTotal = cartTotal();
 
-    if (isDineIn && finalTableId) {
-      try {
-        await sbFetch('restaurant_tables', {
-          method: 'POST',
-          body: JSON.stringify([{
-            id: finalTableId,
-            table_number: finalTableNum,
-            is_occupied: true,
-            updated_at: now,
-          }]),
-          headers: { 'Prefer': 'resolution=merge-duplicates' },
-        });
-      } catch (_) {}
-    }
+    const finalCustomerName = customerName || `${t('custDinein')} ${finalTableNum}`;
 
-    let finalCustomerName = customerName;
-    if (!finalCustomerName) {
-      if (isDelivery) finalCustomerName = t('custDelivery');
-      else if (isTakeaway) finalCustomerName = t('custTakeaway');
-      else finalCustomerName = `${t('custDinein')} ${finalTableNum}`;
-    }
+    // Build rich item snapshot representation
+    const itemsSnapshot = cart.map(c => {
+      let fullName = c.item.name;
+      if (c.type === 'item' && c.size) {
+        fullName += ` (${c.size.name})`;
+      } else if (c.type === 'box' && c.choices) {
+        const choiceParts = [];
+        if (c.choices.sandwiches?.length) choiceParts.push(c.choices.sandwiches.join('+'));
+        if (c.choices.drinks?.length) choiceParts.push(c.choices.drinks.join('+'));
+        if (c.choices.sauces?.length) choiceParts.push(c.choices.sauces.join('+'));
+        if (choiceParts.length) fullName += ` [${choiceParts.join(' | ')}]`;
+      }
+      if (c.notes) fullName += ` - (${c.notes})`;
 
-    let fullNotes = '';
-    if (isDelivery) {
-      fullNotes = `📍 ${deliveryZoneName || 'Zone'}\n🏠 ${deliveryAddress}`;
-      if (notes) fullNotes += `\n📝 ${notes}`;
-    } else {
-      fullNotes = notes;
-    }
+      return {
+        name: fullName,
+        price: c.customPrice || c.item.base_price,
+        qty: c.qty,
+        total: (c.customPrice || c.item.base_price) * c.qty
+      };
+    });
 
     const orderPayload = {
       id: orderId,
       order_number: orderNumber,
-      order_type: isDelivery ? 'delivery' : (isTakeaway ? 'takeaway' : 'dine_in'),
-      table_id: finalTableId,
+      order_type: 'dine_in',
+      table_id: TABLE_ID || null,
       table_number: finalTableNum,
       customer_name: finalCustomerName,
-      customer_phone: isDelivery ? deliveryPhone : '',
+      customer_phone: '',
       status: 'new',
-      subtotal: subtotal,
+      subtotal: grandTotal,
       tax_rate: 0,
       tax_amount: 0,
-      delivery_fee: deliveryFee,
+      delivery_fee: 0,
       discount_amount: 0,
       total_amount: grandTotal,
       payment_method: 'cash',
-      notes: fullNotes,
-      cashier_id: isDelivery ? 'web_delivery' : (isTakeaway ? 'wall_qr' : 'table_qr'),
-      cashier_name: isDelivery ? 'Online Delivery (Web)' : (isTakeaway ? 'Wall QR (Takeaway)' : `Table QR (${finalTableNum})`),
+      notes: notes,
+      cashier_id: 'web_table_qr',
+      cashier_name: `Table QR (${finalTableNum})`,
       created_at: now,
       updated_at: now,
-      items_snapshot: cart.map(c => ({
-        name: c.item.name,
-        price: c.item.base_price,
-        qty: c.qty,
-        total: c.item.base_price * c.qty
-      }))
+      items_snapshot: itemsSnapshot
     };
 
     try {
@@ -2053,12 +2582,12 @@ async function placeOrder() {
           customer_phone: orderPayload.customer_phone,
           status: orderPayload.status,
           subtotal: orderPayload.subtotal,
-          tax_rate: orderPayload.tax_rate,
-          tax_amount: orderPayload.tax_amount,
-          delivery_fee: orderPayload.delivery_fee,
-          discount_amount: orderPayload.discount_amount,
+          tax_rate: 0,
+          tax_amount: 0,
+          delivery_fee: 0,
+          discount_amount: 0,
           total_amount: orderPayload.total_amount,
-          payment_method: orderPayload.payment_method,
+          payment_method: 'cash',
           notes: orderPayload.notes,
           cashier_id: orderPayload.cashier_id,
           cashier_name: orderPayload.cashier_name,
@@ -2075,16 +2604,16 @@ async function placeOrder() {
           body: JSON.stringify({
             id: orderPayload.id,
             order_number: orderPayload.order_number,
-            order_type: orderPayload.order_type,
+            order_type: 'dine_in',
             table_id: null,
             table_number: orderPayload.table_number,
             customer_name: orderPayload.customer_name,
-            customer_phone: orderPayload.customer_phone,
-            status: orderPayload.status,
+            customer_phone: '',
+            status: 'new',
             subtotal: orderPayload.subtotal,
             tax_rate: 0,
             tax_amount: 0,
-            delivery_fee: orderPayload.delivery_fee,
+            delivery_fee: 0,
             discount_amount: 0,
             total_amount: orderPayload.total_amount,
             payment_method: 'cash',
@@ -2101,271 +2630,117 @@ async function placeOrder() {
       }
     }
 
-    const itemsPayload = cart.map(c => ({
-      id: crypto.randomUUID ? crypto.randomUUID()
-        : `item_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
-      order_id: orderId,
-      item_id: c.item.id,
-      item_name: c.item.name,
-      size_name: '',
-      fixed_ingredients: c.item.fixed_ingredients || '',
-      unit_price: c.item.base_price,
-      quantity: c.qty,
-      total_price: c.item.base_price * c.qty,
-      notes: '',
-    }));
-
-    await sbFetch('order_items', {
-      method: 'POST',
-      body: JSON.stringify(itemsPayload),
-      headers: { 'Prefer': 'return=minimal' },
-    });
-
     currentOrderId = orderId;
-    lastSavedOrderPayload = orderPayload;
-    showSuccess(orderNumber, grandTotal, orderPayload);
-    subscribeToOrderStatus(orderId);
-  } catch (e) {
+    closeCartModal();
+    showSuccessScreen(orderPayload);
+    cart = [];
+    updateCartUI();
+  } catch (err) {
+    alert('Erreur lors de l\'envoi : ' + err.message);
+  } finally {
     btn.disabled = false;
     btn.textContent = t('placeOrder');
-    alert('Erreur / خطأ: ' + e.message);
   }
 }
 
-// ── Success Screen & Receipt UI ──
-function showSuccess(orderNumber, total, orderPayload) {
-  document.getElementById('cart-modal').classList.remove('open');
-  document.body.style.overflow = '';
+// ── Success Screen ──
+function showSuccessScreen(order) {
   document.getElementById('menu-view').style.display = 'none';
   document.getElementById('cart-bar').classList.remove('visible');
-
-  document.getElementById('order-number-display').textContent = `#${orderNumber}`;
-  updateReceiptCardUI(orderPayload);
   document.getElementById('success-view').classList.add('show');
-}
-
-function updateReceiptCardUI(orderPayload) {
-  if (!orderPayload) return;
-  const isTakeaway = orderPayload.order_type === 'takeaway';
-  const isDelivery = orderPayload.order_type === 'delivery';
-
-  let typeBadgeText = `${t('dinein')} — ${t('tableNumLabel')} ${orderPayload.table_number || ''}`;
-  let typeBg = 'rgba(2,132,199,0.2)';
-  let typeColor = 'var(--primary-light)';
-
-  if (isDelivery) {
-    typeBadgeText = `${t('delivery')} — ${orderPayload.table_number || ''}`;
-    typeBg = 'rgba(5,150,105,0.25)';
-    typeColor = '#34d399';
-  } else if (isTakeaway) {
-    typeBadgeText = t('takeaway');
-    typeBg = 'rgba(245,158,11,0.2)';
-    typeColor = '#fbbf24';
-  }
-
-  const items = orderPayload.items_snapshot || cart.map(c => ({
-    name: c.item.name,
-    price: c.item.base_price,
-    qty: c.qty,
-    total: c.item.base_price * c.qty
-  }));
+  document.getElementById('order-number-display').textContent = `#${order.order_number}`;
 
   const receipt = document.getElementById('receipt-card');
-  receipt.innerHTML = `
-    <div style="font-weight:800;margin-bottom:12px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-      <span>${t('orderDetails')}</span>
-      <span style="font-size:0.82rem;padding:4px 10px;border-radius:12px;font-weight:700;background:${typeBg};color:${typeColor}">
-        ${typeBadgeText}
-      </span>
-    </div>
-    ${items.map(it => `
+  const isFr = currentLang === 'fr';
+
+  let itemsHtml = '';
+  order.items_snapshot.forEach(item => {
+    itemsHtml += `
       <div class="receipt-row">
-        <span>${translateName(it.name)} × ${it.qty}</span>
-        <span>${formatPrice(it.total)}</span>
+        <span>${item.name} × ${item.qty}</span>
+        <span style="font-weight:700">${formatPrice(item.total)}</span>
       </div>
-    `).join('')}
-    ${isDelivery && orderPayload.delivery_fee > 0 ? `
-      <div class="receipt-row" style="color:#34d399;font-weight:bold;">
-        <span>${t('deliveryFee')}</span>
-        <span>+${formatPrice(orderPayload.delivery_fee)}</span>
-      </div>
-    ` : ''}
+    `;
+  });
+
+  receipt.innerHTML = `
+    <div style="text-align:center;font-weight:800;font-size:1.1rem;margin-bottom:12px;color:var(--primary-light)">
+      🍽️ ${currentRestaurantName}
+    </div>
+    <div class="receipt-row" style="color:var(--text-dim)">
+      <span>${isFr ? 'Table' : 'الطاولة'}</span>
+      <span style="font-weight:800;color:#fff">${order.table_number}</span>
+    </div>
+    <div class="receipt-row" style="color:var(--text-dim)">
+      <span>${isFr ? 'Client' : 'العميل'}</span>
+      <span>${order.customer_name}</span>
+    </div>
+    <div class="receipt-row" style="color:var(--text-dim)">
+      <span>${isFr ? 'Date & Heure' : 'التاريخ والوقت'}</span>
+      <span>${new Date(order.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+    </div>
+    <div style="margin:10px 0 6px;font-weight:700;font-size:0.85rem;color:var(--primary-light)">
+      ${t('orderDetails')} :
+    </div>
+    ${itemsHtml}
     <div class="receipt-total">
       <span>${t('grandTotal')}</span>
-      <span style="color:var(--primary-light)">${formatPrice(orderPayload.total_amount)}</span>
+      <span style="color:var(--primary-light)">${formatPrice(order.total_amount)}</span>
     </div>
   `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  startOrderStatusPolling(order.id);
 }
 
-// ── Download Receipt PDF Function ──
-function downloadReceiptPDF() {
-  if (!lastSavedOrderPayload) {
-    window.print();
-    return;
-  }
-
-  const payload = lastSavedOrderPayload;
-  const isFr = currentLang === 'fr';
-  const restName = currentRestaurantName || 'Restaurant';
-  const orderNum = payload.order_number;
-  const now = new Date().toLocaleString(isFr ? 'fr-FR' : 'ar-DZ');
-
-  const items = payload.items_snapshot || [];
-  const total = payload.total_amount;
-  const typeText = payload.order_type === 'delivery'
-    ? (isFr ? `Livraison (${payload.table_number})` : `توصيل (${payload.table_number})`)
-    : (payload.order_type === 'takeaway'
-        ? (isFr ? 'À emporter' : 'سفري')
-        : (isFr ? `Sur place (Table ${payload.table_number})` : `محلي (طاولة ${payload.table_number})`));
-
-  const printWindow = window.open('', '_blank', 'width=420,height=600');
-  if (!printWindow) {
-    window.print();
-    return;
-  }
-
-  const receiptHtml = `
-  <!DOCTYPE html>
-  <html lang="${currentLang}" dir="${isFr ? 'ltr' : 'rtl'}">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Reçu / وصل #${orderNum} - ${restName}</title>
-    <style>
-      body {
-        font-family: 'Courier New', Courier, monospace, sans-serif;
-        padding: 20px;
-        color: #000;
-        background: #fff;
-        max-width: 320px;
-        margin: 0 auto;
-        font-size: 13px;
-        line-height: 1.4;
-      }
-      .center { text-align: center; }
-      .bold { font-weight: bold; }
-      .title { font-size: 18px; margin-bottom: 4px; }
-      .order-badge {
-        font-size: 22px;
-        border: 2px dashed #000;
-        padding: 6px 12px;
-        margin: 10px auto;
-        display: inline-block;
-      }
-      .divider { border-bottom: 1px dashed #000; margin: 8px 0; }
-      .row { display: flex; justify-content: space-between; margin: 4px 0; }
-      .total-row { font-size: 16px; font-weight: bold; margin-top: 8px; border-top: 2px solid #000; padding-top: 6px; }
-      .footer { margin-top: 16px; text-align: center; font-size: 11px; color: #555; }
-      @media print {
-        body { padding: 0; margin: 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="center">
-      <div class="title bold">${restName}</div>
-      <div>${typeText}</div>
-      <div class="order-badge bold">#${orderNum}</div>
-      <div style="font-size:11px;">${now}</div>
-    </div>
-    <div class="divider"></div>
-    <div class="bold" style="margin-bottom:6px;">${isFr ? 'Articles commandés :' : 'الأصناف المطلوبة :'}</div>
-    ${items.map(it => `
-      <div class="row">
-        <span>${translateName(it.name)} × ${it.qty}</span>
-        <span class="bold">${Number(it.total).toFixed(2)} ${t('currency')}</span>
-      </div>
-    `).join('')}
-    ${payload.delivery_fee > 0 ? `
-      <div class="row">
-        <span>${t('deliveryFee')}</span>
-        <span>+${Number(payload.delivery_fee).toFixed(2)} ${t('currency')}</span>
-      </div>
-    ` : ''}
-    <div class="divider"></div>
-    <div class="row total-row">
-      <span>${isFr ? 'TOTAL :' : 'الإجمالي :'}</span>
-      <span>${Number(total).toFixed(2)} ${t('currency')}</span>
-    </div>
-    ${payload.customer_name ? `<div style="margin-top:8px;font-size:12px;"><strong>${isFr ? 'Client' : 'العميل'}:</strong> ${payload.customer_name}</div>` : ''}
-    ${payload.customer_phone ? `<div style="font-size:12px;"><strong>${isFr ? 'Tél' : 'الهاتف'}:</strong> ${payload.customer_phone}</div>` : ''}
-    <div class="footer">
-      <div>Merci pour votre commande !</div>
-      <div>شكراً لثقتكم وزيارتكم</div>
-    </div>
-    <script>
-      window.onload = function() {
-        window.print();
-      };
-    <\/script>
-  </body>
-  </html>
-  `;
-
-  printWindow.document.open();
-  printWindow.document.write(receiptHtml);
-  printWindow.document.close();
-}
-
-// ── Realtime Status Tracking ──
-function subscribeToOrderStatus(orderId) {
-  if (!SUPABASE_URL || !SUPABASE_KEY) return;
-
-  const interval = setInterval(async () => {
+// ── Realtime / Polling Order Status ──
+let statusPollInterval = null;
+function startOrderStatusPolling(orderId) {
+  if (statusPollInterval) clearInterval(statusPollInterval);
+  statusPollInterval = setInterval(async () => {
     try {
       const res = await sbFetch(`orders?id=eq.${orderId}&select=status`);
-      if (res && res[0]) {
+      if (res && res[0] && res[0].status) {
         updateStatusTracker(res[0].status);
-        if (['delivered', 'cancelled', 'ready'].includes(res[0].status)) {
-          clearInterval(interval);
-        }
       }
     } catch (_) {}
-  }, 7000);
+  }, 5000);
 }
 
 function updateStatusTracker(status) {
-  const steps = { new: 'step-new', preparing: 'step-prep', ready: 'step-ready' };
-  const order = ['new', 'preparing', 'ready'];
-  const currentIdx = order.indexOf(status);
+  const stepNew = document.getElementById('step-new');
+  const stepPrep = document.getElementById('step-prep');
+  const stepReady = document.getElementById('step-ready');
 
-  order.forEach((s, i) => {
-    const el = document.getElementById(steps[s]);
-    if (!el) return;
-    el.classList.remove('active', 'done');
-    if (i < currentIdx) el.classList.add('done');
-    else if (i === currentIdx) el.classList.add('active');
-  });
+  if (status === 'preparing' || status === 'in_progress') {
+    stepNew.className = 'status-step done';
+    stepPrep.className = 'status-step active';
+    stepReady.className = 'status-step';
+  } else if (status === 'ready' || status === 'completed') {
+    stepNew.className = 'status-step done';
+    stepPrep.className = 'status-step done';
+    stepReady.className = 'status-step done';
+  } else {
+    stepNew.className = 'status-step active';
+    stepPrep.className = 'status-step';
+    stepReady.className = 'status-step';
+  }
 }
 
 function resetToMenu() {
-  cart = [];
-  currentOrderId = null;
-  lastSavedOrderPayload = null;
+  if (statusPollInterval) clearInterval(statusPollInterval);
   document.getElementById('success-view').classList.remove('show');
   document.getElementById('menu-view').style.display = 'block';
-  if (document.getElementById('customer-name')) document.getElementById('customer-name').value = '';
-  if (document.getElementById('delivery-phone')) document.getElementById('delivery-phone').value = '';
-  if (document.getElementById('delivery-address')) document.getElementById('delivery-address').value = '';
-  if (document.getElementById('order-notes')) document.getElementById('order-notes').value = '';
-  document.getElementById('place-order-btn').disabled = false;
-  document.getElementById('place-order-btn').textContent = t('placeOrder');
-  updateCartUI();
   renderItems();
+  updateCartUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Helpers ──
-function formatPrice(n) {
-  return Number(n).toFixed(2) + ' ' + t('currency');
-}
-function showLoading(v) {
-  document.getElementById('loading').style.display = v ? 'flex' : 'none';
-}
-function showError(msg) {
-  document.getElementById('error-msg').textContent = msg;
-  document.getElementById('error-screen').classList.add('show');
+function downloadReceiptPDF() {
+  window.print();
 }
 
-// ── Initialize App ──
+// ── Initialization ──
 applyStaticTranslations();
 loadMenu();
 </script>
