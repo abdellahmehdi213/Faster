@@ -647,10 +647,6 @@
       font-weight: 700;
       box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
     }
-    .choice-chip.disabled {
-      opacity: 0.45;
-      pointer-events: none;
-    }
 
     /* Fixed Ingredients Card */
     .ing-card {
@@ -1552,11 +1548,16 @@ const FOOD_TRANSLATIONS = {
   'الكل': 'Tous',
   'أخرى': 'Autres',
   'برغر': 'Burgers',
+  'برجر': 'Burgers',
   'بيتزا': 'Pizzas',
   'تاكوس': 'Tacos',
+  'طاكوس': 'Tacos',
   'سندويتشات': 'Sandwichs',
+  'سندويشات': 'Sandwichs',
   'سندويتش': 'Sandwich',
+  'سندويش': 'Sandwich',
   'شاورما': 'Chawarma',
+  'شوارما': 'Chawarma',
   'وجبات سريعة': 'Fast Food',
   'أطباق رئيسية': 'Plats Principaux',
   'مقبلات': 'Entrées',
@@ -1567,8 +1568,16 @@ const FOOD_TRANSLATIONS = {
   'باستا': 'Pâtes',
   'مشويات': 'Grillades',
   'آيس كريم': 'Glaces / Ice Cream',
+  'مثلجات': 'Glaces',
   'عروض': 'Offres & Box',
-  'بوكس': 'Box Combos'
+  'عروض البوكس': 'Box & Combos',
+  'بوكس': 'Box Combos',
+  'دجاج': 'Poulet',
+  'لحم': 'Viande',
+  'بطاطا': 'Frites',
+  'صلصة': 'Sauce',
+  'جبن': 'Fromage',
+  'طاولة': 'Table'
 };
 
 function getInitialLanguage() {
@@ -1576,7 +1585,7 @@ function getInitialLanguage() {
   if (urlLang === 'fr' || urlLang === 'ar') return urlLang;
   const saved = localStorage.getItem('web_lang');
   if (saved === 'fr' || saved === 'ar') return saved;
-  return 'fr';
+  return 'fr'; // Always default to French
 }
 
 let currentLang = getInitialLanguage();
@@ -1641,7 +1650,7 @@ let cart = [];       // [{type:'item'|'box', item, size, customPrice, choices, n
 let activeCatId = null;
 let currentOrderId = null;
 let restaurantNameLoaded = false;
-let currentRestaurantName = 'Restaurant';
+let currentRestaurantName = 'Faster Food';
 
 // Active Item Modal State
 let currentActiveItem = null;
@@ -2740,7 +2749,7 @@ function downloadReceiptPDF() {
   window.print();
 }
 
-// ── Initialization ──
+// ── Initialization (Default: 100% French) ──
 applyStaticTranslations();
 loadMenu();
 </script>
